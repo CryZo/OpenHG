@@ -64,7 +64,12 @@ for (let i in config.Devices) {
 //Init rest api
 var rest: RestApi = new RestApi(rooms);
 
-//Init Google
-//var google = new Google(rooms);
+if (config.Integrations) {
+	if ((<string[]>config.Integrations).includes('Google')){
+		//Init Google
+		var google = new Google(rooms);
+	}
+}
+
 
 (<any>global).rooms = rooms;

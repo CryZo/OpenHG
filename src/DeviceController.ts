@@ -3,6 +3,7 @@ import { MQTTHandler } from "./MQTTHandler";
 import { TasmotaRGB } from "./Devices/TasmotaRGB";
 import { TasmotaSingleRelais } from "./Devices/TasmotaSingleRelais";
 import { ToggleDummyFromFile } from "./Devices/ToggleDummyFromFile";
+import { BlindsDummyFromFile } from "./Devices/BlindsDummyFromFile";
 
 export class DeviceController {
 	mqtt: MQTTHandler;
@@ -21,6 +22,8 @@ export class DeviceController {
 				return new TasmotaSingleRelais(devName, id, this.mqtt);
 			case 'ToggleDummyFromFile':
 				return new ToggleDummyFromFile(devName, id);
+			case 'BlindsDummyFromFile':
+				return new BlindsDummyFromFile(devName, id);
 
 			default:
 				throw 'Device class not found!';

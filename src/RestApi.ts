@@ -5,6 +5,7 @@ import { IToggleDevice } from "./interfaces/IToggleDevice";
 import { IRGBDevice } from "./interfaces/IRGBDevice";
 import { Color } from "./Color";
 import { IDevice } from "./interfaces/IDevice";
+import { IBlinds } from "./interfaces/IBlinds";
 
 export class RestApi {
 	model: RoomCollection;
@@ -88,7 +89,22 @@ export class RestApi {
 							else if (req.params.status == 'off') castedDev.TurnOff();
 							else if (req.params.status == 'toggle') castedDev.Toggle();
 
+							else if (req.params.status == 'lighten') castedDev.Lighten();
+							else if (req.params.status == 'darken') castedDev.Darken();
+
 							else if (req.params.status.length == 6) castedDev.SetColor(Color.Parse(req.params.status));
+
+							else throw `Can't recognize parameter "${req.params.status}"!`
+							break;
+						}
+
+					case DeviceType.Blinds:
+						{
+							let castedDev = dev as IBlinds;
+
+							if (req.params.status == 'up') castedDev.TurnUp();
+							else if (req.params.status == 'down') castedDev.TurnDown();
+							else if (req.params.status == 'toggle') castedDev.Toggle();
 
 							else throw `Can't recognize parameter "${req.params.status}"!`
 							break;
@@ -135,6 +151,13 @@ export class RestApi {
 						let castedDev = curDev as IRGBDevice;
 						dev.Status = castedDev.Status;
 						dev.Color = castedDev.GetColor().GetHexColor();
+						break;
+					}
+
+				case DeviceType.Blinds:
+					{
+						let castedDev = curDev as IBlinds;
+						dev.Status = castedDev.Status;
 						break;
 					}
 			}

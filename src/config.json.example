@@ -1,0 +1,59 @@
+{
+	"MqttUrl": "mqtt://192.168.0.0:1883",
+	"Rooms": {
+		"r1": {
+			"Name": "Room 1"
+		},
+		"r2": {
+			"Name": "Room 2"
+		},
+		"r3": {
+			"Name": "Room 3"
+		}
+	},
+	"Devices": {
+		"dev1": {
+			"Name": "Lights",
+			"Class": "Shelly1",
+			"Room": "r1",
+			"extraParams": {
+				"shellyDevId": "123456789012"
+			}
+		},
+		"dummy": {
+			"Name": "Dummy lights",
+			"Class": "ToggleDummyFromFile",
+			"Room": "r3",
+			"extraParams": {
+				"filePath": "/home/test/dummyDev.txt"
+			}
+		},
+		"dummyRollo": {
+			"Name": "Rollo",
+			"Class": "BlindsDummyFromFile",
+			"Room": "r3",
+			"extraParams": {
+				"filePath": "/home/test/dummyBlinds.txt"
+			}
+		},
+		"rgbDev": {
+			"Name": "Super cool lights",
+			"Class": "TasmotaRGB",
+			"Room": "r2",
+			"extraParams": {
+				"tasmotaDevId": "rgbDev"
+			}
+		},
+		"dev2": {
+			"Name": "Lights",
+			"Class": "TasmotaSingleRelais",
+			"Room": "r2",
+			"extraParams": {
+				"tasmotaDevId": "dev2"
+			}
+		}
+	},
+	"Integrations": [
+		"Google"
+	]
+}

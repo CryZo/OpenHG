@@ -1,4 +1,5 @@
 export enum DeviceType {
 	Toggle,
-	RGB
+	RGB,
+	Blinds
 }
