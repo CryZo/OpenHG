@@ -17,5 +17,5 @@ Unleash your smart home!
 - [ ] Create a documentation
 	- [ ] AoG integration
 	- [X] Guide to add new device types
-	- [ ] Guide to add new devices
+	- [X] Guide to add new devices
 	- [ ] Configuration samples
