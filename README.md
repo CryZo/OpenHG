@@ -14,9 +14,8 @@ Unleash your smart home!
 3. Edit your `dist/config.json`. Maybe there will be a helpful wiki article soon ;)
 
 # TODOs
-- [X] Create an example config :P
 - [ ] Create a documentation
 	- [ ] AoG integration
-	- [ ] Guide to add new device types
+	- [X] Guide to add new device types
 	- [ ] Guide to add new devices
 	- [ ] Configuration samples
