@@ -68,8 +68,6 @@ export class RestApi {
 			let output: any = {};
 
 			try {
-				let found: boolean = false;
-
 				//Device
 				try {
 					let dev = this.model.GetDevices().GetById(req.params.dev)
