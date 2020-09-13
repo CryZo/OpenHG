@@ -68,47 +68,91 @@ export class RestApi {
 			let output: any = {};
 
 			try {
-				let dev = this.model.GetDevices().GetById(req.params.dev)
-				switch (dev.Type) {
-					case DeviceType.Toggle:
-						{
-							let castedDev = dev as IToggleDevice;
+				let found: boolean = false;
 
-							if (req.params.status == 'on') castedDev.TurnOn();
-							else if (req.params.status == 'off') castedDev.TurnOff();
-							else if (req.params.status == 'toggle') castedDev.Toggle();
-							else throw `Can't recognize parameter "${req.params.status}"!`
+				//Device
+				try {
+					let dev = this.model.GetDevices().GetById(req.params.dev)
+					switch (dev.Type) {
+						case DeviceType.Toggle:
+							{
+								let castedDev = dev as IToggleDevice;
+
+								if (req.params.status == 'on') castedDev.TurnOn();
+								else if (req.params.status == 'off') castedDev.TurnOff();
+								else if (req.params.status == 'toggle') castedDev.Toggle();
+								else throw `Can't recognize parameter "${req.params.status}"!`
+								break;
+							}
+
+						case DeviceType.RGB:
+							{
+								let castedDev = dev as IRGBDevice;
+
+								if (req.params.status == 'on') castedDev.TurnOn();
+								else if (req.params.status == 'off') castedDev.TurnOff();
+								else if (req.params.status == 'toggle') castedDev.Toggle();
+
+								else if (req.params.status == 'lighten') castedDev.Lighten();
+								else if (req.params.status == 'darken') castedDev.Darken();
+
+								else if (req.params.status.length == 6) castedDev.SetColor(Color.Parse(req.params.status));
+
+								else throw `Can't recognize parameter "${req.params.status}"!`
+								break;
+							}
+
+						case DeviceType.Blinds:
+							{
+								let castedDev = dev as IBlinds;
+
+								if (req.params.status == 'up') castedDev.TurnUp();
+								else if (req.params.status == 'down') castedDev.TurnDown();
+								else if (req.params.status == 'toggle') castedDev.Toggle();
+
+								else throw `Can't recognize parameter "${req.params.status}"!`
+								break;
+							}
+					}
+				}
+				catch {
+					//Try to query a room instead
+
+					let room = this.model.GetById(req.params.dev);
+					switch (req.params.status) {
+						case 'on':
+							room.TurnOn();
 							break;
-						}
 
-					case DeviceType.RGB:
-						{
-							let castedDev = dev as IRGBDevice;
-
-							if (req.params.status == 'on') castedDev.TurnOn();
-							else if (req.params.status == 'off') castedDev.TurnOff();
-							else if (req.params.status == 'toggle') castedDev.Toggle();
-
-							else if (req.params.status == 'lighten') castedDev.Lighten();
-							else if (req.params.status == 'darken') castedDev.Darken();
-
-							else if (req.params.status.length == 6) castedDev.SetColor(Color.Parse(req.params.status));
-
-							else throw `Can't recognize parameter "${req.params.status}"!`
+						case 'off':
+							room.TurnOff();
 							break;
-						}
 
-					case DeviceType.Blinds:
-						{
-							let castedDev = dev as IBlinds;
-
-							if (req.params.status == 'up') castedDev.TurnUp();
-							else if (req.params.status == 'down') castedDev.TurnDown();
-							else if (req.params.status == 'toggle') castedDev.Toggle();
-
-							else throw `Can't recognize parameter "${req.params.status}"!`
+						case 'lighten':
+							room.Lighten();
 							break;
-						}
+
+						case 'darken':
+							room.Darken();
+							break;
+
+						case 'up':
+							room.TurnUp();
+							break;
+
+						case 'down':
+							room.TurnDown();
+							break;
+
+						default:
+							if (req.params.status.length == 6) {
+								room.SetColor(Color.Parse(req.params.status));
+							}
+							else {
+								throw `Can't recognize parameter "${req.params.status}"!`;
+							}
+							break;
+					}
 				}
 
 				res.status(200).end('OK');
