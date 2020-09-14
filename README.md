@@ -14,7 +14,7 @@ Unleash your smart home!
 3. Edit your `dist/config.json`. Maybe there will be a helpful wiki article soon ;)
 
 # GUI
-At the moment there's no GUI available. However there' a [CLI client](https://github.com/CryZo/OpenHG-CLI)
+At the moment there's no GUI available. However there's a [CLI client](https://github.com/CryZo/OpenHG-CLI)
 
 # TODOs
 - [ ] Create a documentation
