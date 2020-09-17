@@ -1,6 +1,7 @@
 import { IToggleDevice } from "../interfaces/IToggleDevice";
 import { DeviceType } from "../Enums/DeviceType";
 import * as https from "https";
+import * as http from "http";
 
 export class RestToggle implements IToggleDevice {
 	Name: string;
@@ -8,8 +9,8 @@ export class RestToggle implements IToggleDevice {
 	Type: DeviceType = DeviceType.Toggle;
 	Status: boolean = false;
 
-	OnUrl: string = '';
-	OffUrl: string = '';
+	OnUrl: string;
+	OffUrl: string;
 
 	//Defaults
 	aog_Type: string = 'action.devices.types.LIGHT';
@@ -36,6 +37,14 @@ export class RestToggle implements IToggleDevice {
 	}
 
 	SendCommand(url: string): void {
-		https.get(url);
+		try {
+			if (/^https/g.test(url))
+				https.get(url);
+			else if (/^http/g.test(url))
+				http.get(url);
+		}
+		catch {
+
+		}
 	}
 }
