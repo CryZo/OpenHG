@@ -17,6 +17,8 @@ export class DeviceController {
 		switch (className) {
 			case 'Shelly1':
 				return new Shelly1(devName, id, this.mqtt);
+			case 'ShellyRGBW2Color':
+				return new ShellyRGBW2Color(devName, id, this.mqtt);
 			case 'TasmotaRGB':
 				return new TasmotaRGB(devName, id, this.mqtt);
 			case 'TasmotaSingleRelais':
