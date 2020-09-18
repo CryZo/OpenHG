@@ -5,6 +5,7 @@ import { TasmotaSingleRelais } from "./Devices/TasmotaSingleRelais";
 import { ToggleDummyFromFile } from "./Devices/ToggleDummyFromFile";
 import { BlindsDummyFromFile } from "./Devices/BlindsDummyFromFile";
 import { RestToggle } from "./Devices/RestToggle";
+import { ShellyRGBW2Color } from "./Devices/ShellyRGBW2Color";
 
 export class DeviceController {
 	mqtt: MQTTHandler;
@@ -17,6 +18,8 @@ export class DeviceController {
 		switch (className) {
 			case 'Shelly1':
 				return new Shelly1(devName, id, this.mqtt);
+			case 'ShellyRGBW2Color':
+				return new ShellyRGBW2Color(devName, id, this.mqtt);
 			case 'TasmotaRGB':
 				return new TasmotaRGB(devName, id, this.mqtt);
 			case 'TasmotaSingleRelais':
