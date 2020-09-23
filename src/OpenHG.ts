@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Room } from "./Room";
 import { MQTTHandler } from "./MQTTHandler";
 import { DeviceController } from "./DeviceController";
