@@ -59,7 +59,7 @@ export class ShellyRGBW2White implements IDimDevice {
 
 	SetBrightness(value: number): void {
 		this.Brightness = value;
-		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/white/${this.outputNo}/set`, JSON.stringify({brightness: value}));
+		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/white/${this.outputNo}/set`, JSON.stringify({brightness: value, turn: 'on'}));
 	}
 
 	Lighten(amount: number = this.lightenAmount): void {
