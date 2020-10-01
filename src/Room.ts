@@ -4,6 +4,7 @@ import { IToggleDevice } from "./interfaces/IToggleDevice";
 import { Color } from "./Color";
 import { IRGBDevice } from "./interfaces/IRGBDevice";
 import { IBlinds } from "./interfaces/IBlinds";
+import { IDimDevice } from "./interfaces/IDimDevice";
 
 export class Room {
 	Name: string;
@@ -32,7 +33,7 @@ export class Room {
 		for (let i in this.Devices.Items) {
 			let curDev = this.Devices.Items[i];
 
-			if (curDev.Type == DeviceType.Toggle || curDev.Type == DeviceType.RGB) {
+			if (curDev.Type == DeviceType.Toggle || curDev.Type == DeviceType.RGB || curDev.Type == DeviceType.Dimmer) {
 				(<IToggleDevice>curDev).TurnOn();
 			}
 		}
@@ -42,7 +43,7 @@ export class Room {
 		for (let i in this.Devices.Items) {
 			let curDev = this.Devices.Items[i];
 
-			if (curDev.Type == DeviceType.Toggle || curDev.Type == DeviceType.RGB) {
+			if (curDev.Type == DeviceType.Toggle || curDev.Type == DeviceType.RGB || curDev.Type == DeviceType.Dimmer) {
 				(<IToggleDevice>curDev).TurnOff();
 			}
 		}
@@ -64,7 +65,7 @@ export class Room {
 		for (let i in this.Devices.Items) {
 			let curDev = this.Devices.Items[i];
 
-			if (curDev.Type == DeviceType.RGB) {
+			if (curDev.Type == DeviceType.RGB || curDev.Type == DeviceType.Dimmer) {
 				(<IRGBDevice>curDev).Lighten();
 			}
 		}
@@ -74,8 +75,18 @@ export class Room {
 		for (let i in this.Devices.Items) {
 			let curDev = this.Devices.Items[i];
 
-			if (curDev.Type == DeviceType.RGB) {
+			if (curDev.Type == DeviceType.RGB || curDev.Type == DeviceType.Dimmer) {
 				(<IRGBDevice>curDev).Darken();
+			}
+		}
+	}
+
+	SetBrightness(value: number): void {
+		for (let i in this.Devices.Items) {
+			let curDev = this.Devices.Items[i];
+
+			if (curDev.Type == DeviceType.Dimmer) {
+				(<IDimDevice>curDev).SetBrightness(value);
 			}
 		}
 	}
