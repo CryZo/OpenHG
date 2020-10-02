@@ -8,6 +8,8 @@ import { IDevice } from "./interfaces/IDevice";
 import { IBlinds } from "./interfaces/IBlinds";
 import { IDimDevice } from "./interfaces/IDimDevice";
 
+//TODO Refactor me!
+
 export class RestApi {
 	model: RoomCollection;
 	app: express.Express;
@@ -72,6 +74,16 @@ export class RestApi {
 				//Device
 				try {
 					let dev = this.model.GetDevices().GetById(req.params.dev)
+
+					//Apply extra params
+					{
+						let params: string[] = Object.keys(req.query);
+						for (let i in params) {
+							let curParam = params[i];
+							if (dev && (<any>dev)[curParam] != null)
+								(<any>dev)[curParam] = req.query[curParam];
+						}
+					}
 					switch (dev.Type) {
 						case DeviceType.Toggle:
 							{

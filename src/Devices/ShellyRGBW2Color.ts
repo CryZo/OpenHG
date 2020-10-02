@@ -21,6 +21,7 @@ export class ShellyRGBW2Color implements IRGBDevice {
 
 	mh: MQTTHandler;
 	shellyDevId: string;
+	effect: number = 0;
 
 	constructor(Name: string, id: string, mh: MQTTHandler) {
 		this.Name = Name;
@@ -68,7 +69,7 @@ export class ShellyRGBW2Color implements IRGBDevice {
 			"blue": col.Blue,
 			"gain": 100,
 			"white": 0,
-			"effect": 0,
+			"effect": this.effect,
 			"turn": "on"
 		}));
 	}
