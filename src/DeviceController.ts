@@ -7,6 +7,7 @@ import { BlindsDummyFromFile } from "./Devices/BlindsDummyFromFile";
 import { RestToggle } from "./Devices/RestToggle";
 import { ShellyRGBW2Color } from "./Devices/ShellyRGBW2Color";
 import { ShellyRGBW2White } from "./Devices/ShellyRGBW2White";
+import { HomematicToggle } from "./Devices/HomematicToggle";
 
 export class DeviceController {
 	mqtt: MQTTHandler;
@@ -33,6 +34,8 @@ export class DeviceController {
 				return new BlindsDummyFromFile(devName, id);
 			case 'RestToggle':
 				return new RestToggle(devName, id);
+			case 'HomematicToggle':
+				return new HomematicToggle(devName, id);
 
 			default:
 				throw 'Device class not found!';
