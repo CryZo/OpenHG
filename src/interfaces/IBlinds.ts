@@ -3,8 +3,11 @@ import { IDevice } from "./IDevice";
 
 export interface IBlinds extends IDevice {
 	Status: BlindStatus;
+	Position: number;
 
 	TurnUp(): void;
 	TurnDown(): void;
-	Toggle(): void;
+	Stop(): void;
+
+	SetPosition(pos: number): void;
 }

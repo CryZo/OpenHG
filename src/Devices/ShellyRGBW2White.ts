@@ -1,7 +1,5 @@
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
-import { IRGBDevice } from "../interfaces/IRGBDevice";
-import { Color } from "../Color";
 import { IDimDevice } from "../interfaces/IDimDevice";
 
 export class ShellyRGBW2White implements IDimDevice {

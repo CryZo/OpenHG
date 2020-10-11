@@ -137,7 +137,10 @@ export class RestApi {
 
 								if (req.params.status == 'up') castedDev.TurnUp();
 								else if (req.params.status == 'down') castedDev.TurnDown();
-								else if (req.params.status == 'toggle') castedDev.Toggle();
+								else if (req.params.status == 'stop') castedDev.Stop();
+
+								else if (parseInt(req.params.status) >= 0 && parseInt(req.params.status) <= 100)
+									castedDev.SetPosition(parseInt(req.params.status));
 
 								else throw `Can't recognize parameter "${req.params.status}"!`
 								break;
@@ -242,6 +245,7 @@ export class RestApi {
 					{
 						let castedDev = curDev as IBlinds;
 						dev.Status = castedDev.Status;
+						dev.Position = castedDev.Position;
 						break;
 					}
 			}
