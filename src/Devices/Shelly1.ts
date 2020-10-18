@@ -27,17 +27,24 @@ export class Shelly1 implements IToggleDevice {
 	}
 
 	onMQTT(payload: string) {
-		if (payload.toString() == 'on') this.Status = true;
-		else this.Status = false;
+		let tmpStatus = false;
+		if (payload.toString() == 'on') tmpStatus = true;
+
+		if (tmpStatus !== this.Status) {
+			this.Status = tmpStatus;
+			global.eventHandler.fire('change', this);
+		}
 	}
  
 	TurnOn(): void {
 		this.Status = true;
 		this.mh.SendCommand(`shellies/shelly1-${this.shellyDevId}/relay/0/command`, 'on');
+		global.eventHandler.fire('change', this);
 	}
 	TurnOff(): void {
 		this.Status = false;
 		this.mh.SendCommand(`shellies/shelly1-${this.shellyDevId}/relay/0/command`, 'off');
+		global.eventHandler.fire('change', this);
 	}
 	Toggle(): void {
 		this.Status ? this.TurnOff() : this.TurnOn();

@@ -32,7 +32,12 @@ export class HomematicToggle implements IToggleDevice {
 				});
 			  
 				res.on('end', () => {
-					this.Status = data.includes(`value='true'`);
+					let tmpStatus = data.includes(`value='true'`);
+					
+					if (tmpStatus !== this.Status) {
+						this.Status = tmpStatus;
+						global.eventHandler.fire('change', this);
+					}
 				});
 			}
 
@@ -46,10 +51,12 @@ export class HomematicToggle implements IToggleDevice {
 	TurnOn(): void {
 		this.Status = true;
 		this.SendCommand(`${this.ApiURL}/statechange.cgi?ise_id=${this.IseId}&new_value=true`);
+		global.eventHandler.fire('change', this);
 	}
 	TurnOff(): void {
 		this.Status = false;
 		this.SendCommand(`${this.ApiURL}/statechange.cgi?ise_id=${this.IseId}&new_value=false`);
+		global.eventHandler.fire('change', this);
 	}
 	Toggle(): void {
 		this.Status ? this.TurnOff() : this.TurnOn();

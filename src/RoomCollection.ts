@@ -31,4 +31,16 @@ export class RoomCollection implements ICollection {
 
 		return out;
 	}
+
+	stringify(): string {
+		let output: any = {};
+
+		for (let i in this.Items) {
+			let curRoom = this.Items[i];
+
+			output[i] = JSON.parse(curRoom.stringify());
+		}
+
+		return JSON.stringify(output);
+	}
 }

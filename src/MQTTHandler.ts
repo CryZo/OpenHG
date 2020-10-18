@@ -23,8 +23,17 @@ export class MQTTHandler {
 		});
 
 		this.Client.on('message', (topic, message) => {
+			Object.entries(this.subscribed).forEach(([key, value]) => {
+				if (key.includes('#')) {
+					let term = `^${key.replace('/', '\/').replace('#', '.+')}`
+					let re = new RegExp(term);
+					if (re.test(topic))
+						(<any>value)(message, topic);
+				}
+			});
+
 			if (this.subscribed[topic])
-				this.subscribed[topic](message);
+				this.subscribed[topic](message, topic);
 		});
 	}
 
@@ -32,7 +41,11 @@ export class MQTTHandler {
 		this.Client.publish(topic, payload);
 	}
 
-	Subscribe(topic: string, callback: (payload: string) => void): void {
+	SendRetainedCommand(topic: string, payload: string): void {
+		this.Client.publish(topic, payload, {retain: true});
+	}
+
+	Subscribe(topic: string, callback: (payload: string, topic?: string) => void): void {
 		if (this.connected) {
 			this.Client.subscribe(topic, function (err) {
 				if (err) throw err;

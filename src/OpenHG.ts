@@ -8,6 +8,8 @@ import { RestApi } from "./RestApi";
 import fs from 'fs';
 import path from "path";
 import { Google } from "./Integrations/Google";
+import { Events } from "./Events";
+import { MQTTControls } from "./MQTTControls";
 
 //Load config
 var config: any = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), { encoding: 'utf8' }));
@@ -74,4 +76,7 @@ if (config.Integrations) {
 }
 
 
-(<any>global).rooms = rooms;
+global.rooms = rooms;
+global.eventHandler = new Events();
+
+new MQTTControls(mqtt);

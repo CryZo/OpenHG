@@ -28,24 +28,31 @@ export class TasmotaSingleRelais implements IToggleDevice {
 
 	onMQTT(payload: string): void {
 		let data: any = JSON.parse(payload.toString());
+		
+		let tmpStatus = false;
 		if (data.POWER == 'ON') {
-			this.Status = true;
+			tmpStatus = true;
 		}
-		else {
-			this.Status = false;
+
+		if (tmpStatus !== this.Status) {
+			this.Status = tmpStatus;
+			global.eventHandler.fire('change', this);
 		}
 	}
 
 	TurnOn(): void {
 		this.Status = true;
 		this.mh.SendCommand(`cmnd/${this.tasmotaDevId}/POWER`, 'ON');
+		global.eventHandler.fire('change', this);
 	}
 	TurnOff(): void {
 		this.Status = false;
 		this.mh.SendCommand(`cmnd/${this.tasmotaDevId}/POWER`, 'OFF');
+		global.eventHandler.fire('change', this);
 	}
 	Toggle(): void {
 		this.Status = !this.Status;
 		this.mh.SendCommand(`cmnd/${this.tasmotaDevId}/POWER`, 'TOGGLE');
+		global.eventHandler.fire('change', this);
 	}
 }

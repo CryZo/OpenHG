@@ -35,32 +35,44 @@ export class TasmotaRGB implements IRGBDevice {
 	onMQTT(payload: string): void {
 		let data: any = JSON.parse(payload.toString());
 		if (data.Color) {
-			this.Color = Color.Parse(data.Color);
+			let tmpColor = Color.Parse(data.Color);
+
+			if (tmpColor !== this.Color) {
+				this.Color = tmpColor;
+				global.eventHandler.fire('change', this);
+			}
 		}
 
+		let tmpStatus = false;
 		if (data.POWER == 'ON') {
-			this.Status = true;
+			tmpStatus = true;
 		}
-		else {
-			this.Status = false;
+
+		if (tmpStatus !== this.Status) {
+			this.Status = tmpStatus;
+			global.eventHandler.fire('change', this);
 		}
 	}
 
 	TurnOn(): void {
 		this.Status = true;
 		this.mh.SendCommand(`cmnd/${this.tasmotaDevId}/POWER`, 'ON');
+		global.eventHandler.fire('change', this);
 	}
 	TurnOff(): void {
 		this.Status = false;
 		this.mh.SendCommand(`cmnd/${this.tasmotaDevId}/POWER`, 'OFF');
+		global.eventHandler.fire('change', this);
 	}
 	Toggle(): void {
 		this.Status = !this.Status;
 		this.mh.SendCommand(`cmnd/${this.tasmotaDevId}/POWER`, 'TOGGLE');
+		global.eventHandler.fire('change', this);
 	}
 
 	SetColor(col: Color): void {
 		this.mh.SendCommand(`cmnd/${this.tasmotaDevId}/Color1`, `#${col.GetHexColor()}`);
+		global.eventHandler.fire('change', this);
 	}
 	GetColor(): Color {
 		if (this.Status) {

@@ -27,10 +27,12 @@ export class RestToggle implements IToggleDevice {
 	TurnOn(): void {
 		this.Status = true;
 		this.SendCommand(this.OnUrl);
+		global.eventHandler.fire('change', this);
 	}
 	TurnOff(): void {
 		this.Status = false;
 		this.SendCommand(this.OffUrl);
+		global.eventHandler.fire('change', this);
 	}
 	Toggle(): void {
 		this.Status ? this.TurnOff() : this.TurnOn();

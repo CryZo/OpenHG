@@ -38,27 +38,39 @@ export class ShellyRGBW2Color implements IRGBDevice {
 
 		let data = JSON.parse(payload);
 
-		if (data.ison != undefined)
-			this.Status = data.ison;
+		if (data.ison != undefined) {
+			let tmpStatus = data.ison;
+
+			if (tmpStatus !== this.Status) {
+				this.Status = tmpStatus;
+				global.eventHandler.fire('change', this);
+			}
+		}
 		
 		if (data.red != undefined && data.green != undefined && data.blue != undefined) {
 			let col = new Color();
 			col.SetColors(data.red, data.green, data.blue);
 
-			this.Color = col;
+			if (col !== this.Color) {
+				this.Color = col;
+				global.eventHandler.fire('change', this);
+			}
 		}
 	}
 
 	TurnOn(): void {
 		this.Status = true;
 		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/color/0/command`, 'on');
+		global.eventHandler.fire('change', this);
 	}
 	TurnOff(): void {
 		this.Status = false;
 		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/color/0/command`, 'off');
+		global.eventHandler.fire('change', this);
 	}
 	Toggle(): void {
 		this.Status ? this.TurnOff() : this.TurnOn();
+		global.eventHandler.fire('change', this);
 	}
 
 	SetColor(col: Color): void {
@@ -72,6 +84,7 @@ export class ShellyRGBW2Color implements IRGBDevice {
 			"effect": this.effect,
 			"turn": "on"
 		}));
+		global.eventHandler.fire('change', this);
 	}
 	GetColor(): Color {
 		if (this.Status) {
