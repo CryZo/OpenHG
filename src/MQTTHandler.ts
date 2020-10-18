@@ -41,6 +41,10 @@ export class MQTTHandler {
 		this.Client.publish(topic, payload);
 	}
 
+	SendRetainedCommand(topic: string, payload: string): void {
+		this.Client.publish(topic, payload, {retain: true});
+	}
+
 	Subscribe(topic: string, callback: (payload: string, topic?: string) => void): void {
 		if (this.connected) {
 			this.Client.subscribe(topic, function (err) {
