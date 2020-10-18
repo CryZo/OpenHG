@@ -32,7 +32,7 @@ export class RestApi {
 		});
 
 		this.app.get('/full', (req: any, res: any) => {
-			res.end(this.model.stringify);
+			res.end(this.model.stringify());
 		});
 
 		this.app.get('/controll/:dev/:status', this.HandleControl);
