@@ -206,7 +206,7 @@ export class RestApi {
 		})
 	}
 
-	static generateDeviceStructure(data: IDevice[]): any {
+	static generateDeviceStructure(data: IDevice[]): any {//TODO Refactor me and then move me to DeviceCollection.ts
 		let ret: any = {};
 
 		for (let d in data) {

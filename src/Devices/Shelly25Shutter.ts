@@ -30,41 +30,58 @@ export class Shelly25Shutter implements IBlinds {
 	}
 
 	onMQTTStatus(payload: string): void {
+		let tmpStatus: BlindStatus = null;
 		switch (payload) {
 			case 'open':
-				this.Status = BlindStatus.MovingUp;
-				return;
+				tmpStatus = BlindStatus.MovingUp;
+				break;
 
 			case 'close':
-				this.Status = BlindStatus.MovingDown;
-				return;
+				tmpStatus = BlindStatus.MovingDown;
+				break;
 
 			case 'stop':
-				this.Status = BlindStatus.Stop;
-				return;
+				tmpStatus = BlindStatus.Stop;
+				break;
+		}
+
+		if (tmpStatus !== this.Status) {
+			this.Status = tmpStatus;
+			global.eventHandler.fire('change', this);
 		}
 	}
 	onMQTTPos(payload: string): void {
+		let tmpPos: number;
+
 		if (!isNaN(parseInt(payload))) {
-			this.Position = parseInt(payload);
+			tmpPos = parseInt(payload);
+		}
+
+		if (tmpPos !== this.Position) {
+			this.Position = tmpPos;
+			global.eventHandler.fire('change', this);
 		}
 	}
 
 	TurnUp(): void {
 		this.Status = BlindStatus.MovingUp;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command`, 'open');
+		global.eventHandler.fire('change', this);
 	}
 	TurnDown(): void {
 		this.Status = BlindStatus.MovingDown;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command`, 'close');
+		global.eventHandler.fire('change', this);
 	}
 	Stop(): void {
 		this.Status = BlindStatus.Stop;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command`, 'stop');
+		global.eventHandler.fire('change', this);
 	}
 
 	SetPosition(value: number): void {
 		this.Position = value;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command/pos`, `${value}`);
+		global.eventHandler.fire('change', this);
 	}
 }

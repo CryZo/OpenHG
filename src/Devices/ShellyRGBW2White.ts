@@ -35,21 +35,34 @@ export class ShellyRGBW2White implements IDimDevice {
 
 		let data = JSON.parse(payload);
 
-		if (data.ison != undefined)
-			this.Status = data.ison;
+		if (data.ison != undefined) {
+			let tmpStatus = data.ison;
+
+			if (tmpStatus !== this.Status) {
+				this.Status = tmpStatus;
+				global.eventHandler.fire('change', this);
+			}
+		}
 		
 		if (data.brightness != undefined) {
-			this.Brightness = data.brightness;
+			let tmpBrightness = data.brightness;
+
+			if (tmpBrightness !== this.Brightness) {
+				this.Brightness = tmpBrightness;
+				global.eventHandler.fire('change', this);
+			}
 		}
 	}
 
 	TurnOn(): void {
 		this.Status = true;
 		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/white/${this.outputNo}/command`, 'on');
+		global.eventHandler.fire('change', this);
 	}
 	TurnOff(): void {
 		this.Status = false;
 		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/white/${this.outputNo}/command`, 'off');
+		global.eventHandler.fire('change', this);
 	}
 	Toggle(): void {
 		this.Status ? this.TurnOff() : this.TurnOn();
@@ -58,6 +71,7 @@ export class ShellyRGBW2White implements IDimDevice {
 	SetBrightness(value: number): void {
 		this.Brightness = value;
 		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/white/${this.outputNo}/set`, JSON.stringify({brightness: value, turn: 'on'}));
+		global.eventHandler.fire('change', this);
 	}
 
 	Lighten(amount: number = this.lightenAmount): void {

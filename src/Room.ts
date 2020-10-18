@@ -5,6 +5,7 @@ import { Color } from "./Color";
 import { IRGBDevice } from "./interfaces/IRGBDevice";
 import { IBlinds } from "./interfaces/IBlinds";
 import { IDimDevice } from "./interfaces/IDimDevice";
+import { RestApi } from "./RestApi";
 
 export class Room {
 	Name: string;
@@ -22,6 +23,16 @@ export class Room {
 		}
 
 		return types;
+	}
+
+	stringify(): string {
+		let output: any = {
+			id: this._id,
+			Name: this.Name,
+			Devices: RestApi.generateDeviceStructure(this.Devices.Items)
+		};
+
+		return JSON.stringify(output);
 	}
 
 
