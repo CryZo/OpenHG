@@ -35,6 +35,45 @@ export class Room {
 		return JSON.stringify(output);
 	}
 
+	HandleCommand(cmd: string) {
+		switch (cmd) {
+			case 'on':
+				this.TurnOn();
+				break;
+
+			case 'off':
+				this.TurnOff();
+				break;
+
+			case 'lighten':
+				this.Lighten();
+				break;
+
+			case 'darken':
+				this.Darken();
+				break;
+
+			case 'up':
+				this.TurnUp();
+				break;
+
+			case 'down':
+				this.TurnDown();
+				break;
+
+			default:
+				if (cmd.length == 6) {
+					this.SetColor(Color.Parse(cmd));
+				}
+				else if (parseInt(cmd) >= 0 && parseInt(cmd) <= 100) {
+					this.SetBrightness(parseInt(cmd));
+				}
+				else {
+					throw `Can't recognize parameter "${cmd}"!`;
+				}
+				break;
+		}
+	}
 
 
 	/*
