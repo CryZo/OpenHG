@@ -1,12 +1,16 @@
+import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { IRGB } from "../interfaces/Traits/IRGB";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
-import { IRGBDevice } from "../interfaces/IRGBDevice";
 import { Color } from "../Color";
+import { Trait } from "../Enums/Trait";
 
-export class TasmotaRGB implements IRGBDevice {
+export class TasmotaRGB implements IDevice, IRGB {
 	Name: string;
 	_id: string;
-	Type: DeviceType = DeviceType.RGB;
+	Type: DeviceType = DeviceType.Lights;
+	Traits: Trait[] = [Trait.OnOff, Trait.RGB]
+	
 	Status: boolean = false;
 	Color: Color = Color.GetBlack();
 
@@ -83,13 +87,13 @@ export class TasmotaRGB implements IRGBDevice {
 		}
 	}
 
-	Lighten(amount: number = this.lightenAmount): void {
+	LightenColor(amount: number = this.lightenAmount): void {
 		let col: Color = this.GetColor();
 		col.Lighten(amount);
 		this.SetColor(col);
 	}
 
-	Darken(amount: number = this.lightenAmount): void {
+	DarkenColor(amount: number = this.lightenAmount): void {
 		let col: Color = this.GetColor();
 		col.Darken(amount);
 		this.SetColor(col);

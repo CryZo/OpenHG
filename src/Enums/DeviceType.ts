@@ -1,6 +1,4 @@
 export enum DeviceType {
-	Toggle,
-	RGB,
-	Dimmer,
+	Lights,
 	Blinds
 }

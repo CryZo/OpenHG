@@ -1,5 +1,5 @@
 import { DeviceController } from "./DeviceController";
-import { IDevice } from "./interfaces/IDevice";
+import { IDevice } from "./interfaces/DeviceTypes/IDevice";
 import { MQTTHandler } from "./MQTTHandler";
 
 export class MQTTControls {
