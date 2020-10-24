@@ -11,14 +11,28 @@ export class MQTTControls {
         global.eventHandler.registerCallback(this.publishEvent.bind(this));
         global.eventHandler.registerCallback(this.publishModel.bind(this), 'change');
 
-        this.handler.Subscribe('open-hg/cmd/#', this.handleCmd.bind(this))
+        this.handler.Subscribe('open-hg/cmd/device/#', this.handleDeviceCmd.bind(this))
+        this.handler.Subscribe('open-hg/cmd/room/#', this.handleRoomCmd.bind(this))
     }
 
-    handleCmd(payload: string, topic: string) {
-        let id = topic.substr(12).split('/')[0];
+    handleDeviceCmd(payload: string, topic: string) {
+        let id = topic.substr(19).split('/')[0];
         try {
             let dev = global.rooms.GetDevices().GetById(id);
             DeviceController.HandleCommand(dev, payload);
+        }
+        catch (err) {
+            console.error(err);
+        };
+    }
+
+    handleRoomCmd(payload: string, topic: string) {
+        let parts = topic.substr(17).split('/')
+        let id = parts[0];
+        let trait = parts[1];
+        try {
+            let room = global.rooms.GetById(id);
+            //TODO
         }
         catch (err) {
             console.error(err);
@@ -38,6 +52,4 @@ export class MQTTControls {
     publishModel(payload: any, type: string) {
         this.handler.SendRetainedCommand(`open-hg/full`, global.rooms.stringify());
     }
-
-    //TODO Implement an control function
 }

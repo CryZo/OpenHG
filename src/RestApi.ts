@@ -33,11 +33,11 @@ export class RestApi {
 		});
 
 		this.app.get('/full', (req: any, res: any) => {
-			res.end(this.model.stringify);
+			res.end(this.model.stringify());
 		});
 
-		this.app.get('/controll/:dev/:status', this.HandleControl);
-		this.app.get('/control/:dev/:status', this.HandleControl);
+		this.app.get('/controll/:dev/:status', this.HandleControl.bind(this));
+		this.app.get('/control/:dev/:status', this.HandleControl.bind(this));
 
 		this.server = this.app.listen(8081, () => {
 			let host = this.server.address().address,
@@ -48,8 +48,6 @@ export class RestApi {
 	}
 
 	HandleControl(req: any, res: any) {
-		let output: any = {};
-
 		try {
 			let dev = this.model.GetDevices().GetById(req.params.dev)
 
