@@ -1,3 +1,5 @@
+import { Color } from "./Color";
+
 import { Shelly1 } from "./Devices/Shelly1";
 import { MQTTHandler } from "./MQTTHandler";
 import { TasmotaRGB } from "./Devices/TasmotaRGB";
@@ -7,13 +9,14 @@ import { ShellyRGBW2Color } from "./Devices/ShellyRGBW2Color";
 import { ShellyRGBW2White } from "./Devices/ShellyRGBW2White";
 import { HomematicToggle } from "./Devices/HomematicToggle";
 import { Shelly25Shutter } from "./Devices/Shelly25Shutter";
-import { IDevice } from "./interfaces/IDevice";
-import { DeviceType } from "./Enums/DeviceType";
-import { IToggleDevice } from "./interfaces/IToggleDevice";
-import { IRGBDevice } from "./interfaces/IRGBDevice";
-import { IDimDevice } from "./interfaces/IDimDevice";
-import { IBlinds } from "./interfaces/IBlinds";
-import { Color } from "./Color";
+
+import { IDevice } from "./interfaces/DeviceTypes/IDevice";
+import { IOnOff } from "./interfaces/Traits/IOnOff";
+import { IRGB } from "./interfaces/Traits/IRGB";
+import { IBrightness } from "./interfaces/Traits/IBrightness";
+import { IOpenClose } from "./interfaces/Traits/IOpenClose";
+import { Trait } from "./Enums/Trait";
+import { IPosition } from "./interfaces/Traits/IPosition";
 
 export class DeviceController {
 	mqtt: MQTTHandler;
@@ -47,68 +50,51 @@ export class DeviceController {
 	}
 
 	static HandleCommand(dev: IDevice, cmd: string) {
+		if(dev.Traits.includes(Trait.OnOff))
+		{
+			let castedDev = dev as IOnOff;
 
-		switch (dev.Type) {
-			case DeviceType.Toggle:
-				{
-					let castedDev = dev as IToggleDevice;
+			if (cmd == 'on') castedDev.TurnOn();
+			else if (cmd == 'off') castedDev.TurnOff();
+			else if (cmd == 'toggle') castedDev.Toggle();
+		}
 
-					if (cmd == 'on') castedDev.TurnOn();
-					else if (cmd == 'off') castedDev.TurnOff();
-					else if (cmd == 'toggle') castedDev.Toggle();
-					else throw `Can't recognize parameter "${cmd}"!`
-					break;
-				}
+		if(dev.Traits.includes(Trait.RGB))
+		{
+			let castedDev = dev as IRGB;
 
-			case DeviceType.RGB:
-				{
-					let castedDev = dev as IRGBDevice;
+			if (cmd == 'lightenColor') castedDev.LightenColor();
+			else if (cmd == 'darkenColor') castedDev.DarkenColor();
 
-					if (cmd == 'on') castedDev.TurnOn();
-					else if (cmd == 'off') castedDev.TurnOff();
-					else if (cmd == 'toggle') castedDev.Toggle();
+			else if (cmd.length == 6) castedDev.SetColor(Color.Parse(cmd));
+		}
 
-					else if (cmd == 'lighten') castedDev.Lighten();
-					else if (cmd == 'darken') castedDev.Darken();
+		if(dev.Traits.includes(Trait.Brightness))
+		{
+			let castedDev = dev as IBrightness;
 
-					else if (cmd.length == 6) castedDev.SetColor(Color.Parse(cmd));
+			if (cmd == 'lighten') castedDev.Lighten();
+			else if (cmd == 'darken') castedDev.Darken();
 
-					else throw `Can't recognize parameter "${cmd}"!`
-					break;
-				}
+			else if (parseInt(cmd) >= 0 && parseInt(cmd) <= 100)
+				castedDev.SetBrightness(parseInt(cmd));
+		}
 
-			case DeviceType.Dimmer:
-				{
-					let castedDev = dev as IDimDevice;
+		if(dev.Traits.includes(Trait.OpenClose))
+		{
+			let castedDev = dev as IOpenClose;
 
-					if (cmd == 'on') castedDev.TurnOn();
-					else if (cmd == 'off') castedDev.TurnOff();
-					else if (cmd == 'toggle') castedDev.Toggle();
+			if (cmd == 'up') castedDev.TurnUp();
+			else if (cmd == 'down') castedDev.TurnDown();
+			else if (cmd == 'stop') castedDev.Stop();
+		}
 
-					else if (cmd == 'lighten') castedDev.Lighten();
-					else if (cmd == 'darken') castedDev.Darken();
+		if(dev.Traits.includes(Trait.Position))
+		{
+			let castedDev = dev as IPosition;
 
-					else if (parseInt(cmd) >= 0 && parseInt(cmd) <= 100)
-						castedDev.SetBrightness(parseInt(cmd));
-
-					else throw `Can't recognize parameter "${cmd}"!`
-					break;
-				}
-
-			case DeviceType.Blinds:
-				{
-					let castedDev = dev as IBlinds;
-
-					if (cmd == 'up') castedDev.TurnUp();
-					else if (cmd == 'down') castedDev.TurnDown();
-					else if (cmd == 'stop') castedDev.Stop();
-
-					else if (parseInt(cmd) >= 0 && parseInt(cmd) <= 100)
-						castedDev.SetPosition(parseInt(cmd));
-
-					else throw `Can't recognize parameter "${cmd}"!`
-					break;
-				}
+			if (parseInt(cmd) >= 0 && parseInt(cmd) <= 100)
+				castedDev.SetPosition(parseInt(cmd));
 		}
 	}
 }

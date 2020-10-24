@@ -1,4 +1,4 @@
-import { IDevice } from "./interfaces/IDevice";
+import { IDevice } from "./interfaces/DeviceTypes/IDevice";
 import { ICollection } from "./interfaces/ICollection";
 
 export class DeviceCollection implements ICollection {

@@ -1,13 +1,15 @@
 import express from "express";
 import { RoomCollection } from "./RoomCollection";
 import { DeviceType } from "./Enums/DeviceType";
-import { IToggleDevice } from "./interfaces/IToggleDevice";
-import { IRGBDevice } from "./interfaces/IRGBDevice";
-import { Color } from "./Color";
-import { IDevice } from "./interfaces/IDevice";
-import { IBlinds } from "./interfaces/IBlinds";
-import { IDimDevice } from "./interfaces/IDimDevice";
+import { IOnOff } from "./interfaces/Traits/IOnOff";
+import { IRGB } from "./interfaces/Traits/IRGB";
+import { IDevice } from "./interfaces/DeviceTypes/IDevice";
+import { IOpenClose } from "./interfaces/Traits/IOpenClose";
+import { IPosition } from "./interfaces/Traits/IPosition";
+import { IBrightness } from "./interfaces/Traits/IBrightness";
 import { DeviceController } from "./DeviceController";
+import { Trait } from "./Enums/Trait";
+import { Room } from "./Room";
 
 //TODO Refactor me!
 
@@ -37,6 +39,7 @@ export class RestApi {
 
 		this.app.get('/controll/:dev/:status', this.HandleControl.bind(this));
 		this.app.get('/control/:dev/:status', this.HandleControl.bind(this));
+		this.app.get('/control/room/:id/:devType/:status', this.HandleRoomControl.bind(this));
 
 		this.server = this.app.listen(8081, () => {
 			let host = this.server.address().address,
@@ -48,39 +51,40 @@ export class RestApi {
 
 	HandleControl(req: any, res: any) {
 		try {
-			//Device
-			try {
-				let dev = this.model.GetDevices().GetById(req.params.dev)
+			let dev = this.model.GetDevices().GetById(req.params.dev)
 
-				//Apply extra params
-				{
-					let params: string[] = Object.keys(req.query);
-					for (let i in params) {
-						let curParam = params[i];
-						if (dev && (<any>dev)[curParam] != null)
-							(<any>dev)[curParam] = req.query[curParam];
-					}
+			//Apply extra params
+			{
+				let params: string[] = Object.keys(req.query);
+				for (let i in params) {
+					let curParam = params[i];
+					if (dev && (<any>dev)[curParam] != null)
+						(<any>dev)[curParam] = req.query[curParam];
 				}
-
-				DeviceController.HandleCommand(dev, req.params.status);
-			}
-			catch {
-				//Try to query a room instead
-
-				let room = this.model.GetById(req.params.dev);
-				room.HandleCommand(req.params.status);
 			}
 
-			res.status(200).end('OK');
+			DeviceController.HandleCommand(dev, req.params.status);
 		}
-
 		catch (error) {
 			res.status(400).end(error);
 		}
+		res.status(200).end();
+	}
+
+	HandleRoomControl(req: any, res: any) {
+		try {
+			let room: Room = this.model.GetById(req.params.id);
+
+			room.handleCommand(DeviceType[req.params.devType as keyof typeof DeviceType], req.params.status);
+		}
+		catch (error) {
+			res.status(400).end(error);
+		}
+		res.status(200).end();
 	}
 
 	static generateDeviceStructure(data: IDevice[]): any {//TODO Refactor me and then move me to DeviceCollection.ts
-		let ret: any = {};
+		let ret: any[] = [];
 
 		for (let d in data) {
 			let curDev = data[d];
@@ -89,41 +93,39 @@ export class RestApi {
 			dev.id = curDev._id;
 			dev.Name = curDev.Name;
 			dev.Type = curDev.Type;
+			dev.Traits = curDev.Traits;
 
-			switch (curDev.Type) {
-				case DeviceType.Toggle:
-					{
-						let castedDev = curDev as IToggleDevice;
-						dev.Status = castedDev.Status;
-						break;
-					}
-
-				case DeviceType.RGB:
-					{
-						let castedDev = curDev as IRGBDevice;
-						dev.Status = castedDev.Status;
-						dev.Color = castedDev.GetColor().GetHexColor();
-						break;
-					}
-
-				case DeviceType.Dimmer:
-					{
-						let castedDev = curDev as IDimDevice;
-						dev.Status = castedDev.Status;
-						dev.Brightness = castedDev.Brightness;
-						break;
-					}
-
-				case DeviceType.Blinds:
-					{
-						let castedDev = curDev as IBlinds;
-						dev.Status = castedDev.Status;
-						dev.Position = castedDev.Position;
-						break;
-					}
+			if (curDev.Traits.includes(Trait.OnOff))
+			{
+				let castedDev = curDev as IOnOff;
+				dev.Status = castedDev.Status;
 			}
 
-			ret[d] = dev;
+			if (curDev.Traits.includes(Trait.RGB))
+			{
+				let castedDev = curDev as IRGB;
+				dev.Color = castedDev.GetColor().GetHexColor();
+			}
+			
+			if (curDev.Traits.includes(Trait.Brightness))
+			{
+				let castedDev = curDev as IBrightness;
+				dev.Brightness = castedDev.Brightness;
+			}
+
+			if (curDev.Traits.includes(Trait.OpenClose))
+			{
+				let castedDev = curDev as IOpenClose;
+				dev.MovementStatus = castedDev.MovementStatus;
+			}
+
+			if (curDev.Traits.includes(Trait.Position))
+			{
+				let castedDev = curDev as IPosition;
+				dev.Position = castedDev.Position;
+			}
+
+			ret.push(dev);
 		}
 
 		return ret;

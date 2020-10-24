@@ -7,7 +7,7 @@ import { RoomCollection } from "./RoomCollection";
 import { RestApi } from "./RestApi";
 import fs from 'fs';
 import path from "path";
-import { Google } from "./Integrations/Google";
+//import { Google } from "./Integrations/Google";
 import { Events } from "./Events";
 import { MQTTControls } from "./MQTTControls";
 
@@ -71,7 +71,7 @@ var rest: RestApi = new RestApi(rooms);
 if (config.Integrations) {
 	if ((<string[]>config.Integrations).includes('Google')){
 		//Init Google
-		var google = new Google(rooms);
+	//	var google = new Google(rooms);
 	}
 }
 

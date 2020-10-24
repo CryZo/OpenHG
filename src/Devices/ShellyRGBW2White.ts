@@ -1,11 +1,15 @@
+import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { IBrightness } from "../interfaces/Traits/IBrightness";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
-import { IDimDevice } from "../interfaces/IDimDevice";
+import { Trait } from "../Enums/Trait";
 
-export class ShellyRGBW2White implements IDimDevice {
+export class ShellyRGBW2White implements IDevice, IBrightness {
 	Name: string;
 	_id: string;
-	Type: DeviceType = DeviceType.Dimmer;
+	Type: DeviceType = DeviceType.Lights;
+	Traits: Trait[] = [Trait.OnOff, Trait.Brightness]
+	
 	Status: boolean = false;
 	Brightness: number = 0;
 

@@ -1,5 +1,6 @@
 import { DeviceController } from "./DeviceController";
-import { IDevice } from "./interfaces/IDevice";
+import { DeviceType } from "./Enums/DeviceType";
+import { IDevice } from "./interfaces/DeviceTypes/IDevice";
 import { MQTTHandler } from "./MQTTHandler";
 
 export class MQTTControls {
@@ -27,12 +28,12 @@ export class MQTTControls {
     }
 
     handleRoomCmd(payload: string, topic: string) {
-        let parts = topic.substr(17).split('/')
-        let id = parts[0];
-        let trait = parts[1];
+        let parts: string[] = topic.substr(17).split('/')
+        let id: string = parts[0];
+        let devType: string = parts[1];
         try {
             let room = global.rooms.GetById(id);
-            //TODO
+            room.handleCommand(DeviceType[devType as keyof typeof DeviceType], payload)
         }
         catch (err) {
             console.error(err);

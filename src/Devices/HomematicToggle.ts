@@ -1,12 +1,16 @@
-import { IToggleDevice } from "../interfaces/IToggleDevice";
+import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { IOnOff } from "../interfaces/Traits/IOnOff";
 import { DeviceType } from "../Enums/DeviceType";
 import * as https from "https";
 import * as http from "http";
+import { Trait } from "../Enums/Trait";
 
-export class HomematicToggle implements IToggleDevice {
+export class HomematicToggle implements IDevice, IOnOff {
 	Name: string;
 	_id: string;
-	Type: DeviceType = DeviceType.Toggle;
+	Type: DeviceType = DeviceType.Lights;
+	Traits: Trait[] = [Trait.OnOff];
+
 	Status: boolean = false;
 
 	ApiURL: string;

@@ -1,14 +1,17 @@
+import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { IOpenClose } from "../interfaces/Traits/IOpenClose";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
-import { IBlinds } from "../interfaces/IBlinds";
 import { BlindStatus } from "../Enums/BlindStatus";
+import { Trait } from "../Enums/Trait";
 
-export class Shelly25Shutter implements IBlinds {
+export class Shelly25Shutter implements IDevice, IOpenClose {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Blinds;
-	Status: BlindStatus = BlindStatus.Stop;
+	MovementStatus: BlindStatus = BlindStatus.Stop;
 	Position: number = 0;
+	Traits: Trait[] = [Trait.OpenClose, Trait.Position];
 
 	//Defaults
 	//TODO
@@ -45,8 +48,8 @@ export class Shelly25Shutter implements IBlinds {
 				break;
 		}
 
-		if (tmpStatus !== this.Status) {
-			this.Status = tmpStatus;
+		if (tmpStatus !== this.MovementStatus) {
+			this.MovementStatus = tmpStatus;
 			global.eventHandler.fire('change', this);
 		}
 	}
@@ -64,17 +67,17 @@ export class Shelly25Shutter implements IBlinds {
 	}
 
 	TurnUp(): void {
-		this.Status = BlindStatus.MovingUp;
+		this.MovementStatus = BlindStatus.MovingUp;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command`, 'open');
 		global.eventHandler.fire('change', this);
 	}
 	TurnDown(): void {
-		this.Status = BlindStatus.MovingDown;
+		this.MovementStatus = BlindStatus.MovingDown;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command`, 'close');
 		global.eventHandler.fire('change', this);
 	}
 	Stop(): void {
-		this.Status = BlindStatus.Stop;
+		this.MovementStatus = BlindStatus.Stop;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command`, 'stop');
 		global.eventHandler.fire('change', this);
 	}

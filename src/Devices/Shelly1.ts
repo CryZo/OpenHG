@@ -1,12 +1,15 @@
-import { IToggleDevice } from "../interfaces/IToggleDevice";
+import { IOnOff } from "../interfaces/Traits/IOnOff";
+import { IDevice } from "../interfaces/DeviceTypes/IDevice";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
+import { Trait } from "../Enums/Trait";
 
-export class Shelly1 implements IToggleDevice {
+export class Shelly1 implements IDevice, IOnOff {
 	Name: string;
 	_id: string;
-	Type: DeviceType = DeviceType.Toggle;
+	Type: DeviceType = DeviceType.Lights;
 	Status: boolean = false;
+	Traits: Trait[] = [Trait.OnOff];
 
 	mh: MQTTHandler;
 	shellyDevId: string;
