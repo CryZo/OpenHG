@@ -11,7 +11,7 @@ export class Shelly25Shutter implements IDevice, IOpenClose {
 	Type: DeviceType = DeviceType.Blinds;
 	MovementStatus: BlindStatus = BlindStatus.Stop;
 	Position: number = 0;
-	Traits: Trait[] = [Trait.OpenClose];
+	Traits: Trait[] = [Trait.OpenClose, Trait.Position];
 
 	//Defaults
 	//TODO

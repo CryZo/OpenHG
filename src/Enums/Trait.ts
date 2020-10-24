@@ -2,5 +2,6 @@ export enum Trait {
     Brightness,
     RGB,
     OnOff,
-    OpenClose
+    OpenClose,
+    Position
 }

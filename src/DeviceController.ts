@@ -16,6 +16,7 @@ import { IRGB } from "./interfaces/Traits/IRGB";
 import { IBrightness } from "./interfaces/Traits/IBrightness";
 import { IOpenClose } from "./interfaces/Traits/IOpenClose";
 import { Trait } from "./Enums/Trait";
+import { IPosition } from "./interfaces/Traits/IPosition";
 
 export class DeviceController {
 	mqtt: MQTTHandler;
@@ -86,8 +87,13 @@ export class DeviceController {
 			if (cmd == 'up') castedDev.TurnUp();
 			else if (cmd == 'down') castedDev.TurnDown();
 			else if (cmd == 'stop') castedDev.Stop();
+		}
 
-			else if (parseInt(cmd) >= 0 && parseInt(cmd) <= 100)
+		if(dev.Traits.includes(Trait.Position))
+		{
+			let castedDev = dev as IPosition;
+
+			if (parseInt(cmd) >= 0 && parseInt(cmd) <= 100)
 				castedDev.SetPosition(parseInt(cmd));
 		}
 	}
