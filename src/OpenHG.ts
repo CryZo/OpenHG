@@ -28,6 +28,7 @@ for (let i in config.Rooms) {
 	let newRoom: Room = new Room();
 	newRoom._id = i;
 	newRoom.Name = curObj.Name;
+	newRoom.Floor = curObj.Floor;
 
 	rooms.Add(newRoom);
 }

@@ -6,6 +6,7 @@ import { RestApi } from "./RestApi";
 
 export class Room {
 	Name: string;
+	Floor: number;
 	_id: string;
 	Devices: DeviceCollection = new DeviceCollection();
 
@@ -40,6 +41,7 @@ export class Room {
 		let output: any = {
 			id: this._id,
 			Name: this.Name,
+			Floor: this.Floor,
 			Devices: RestApi.generateDeviceStructure(this.Devices.Items),
 			Traits: this.GetTraits()
 		};
