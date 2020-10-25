@@ -84,6 +84,7 @@ export class DeviceController {
 		{
 			let castedDev = dev as IOpenClose;
 
+			//TODO Rename me
 			if (cmd == 'up') castedDev.TurnUp();
 			else if (cmd == 'down') castedDev.TurnDown();
 			else if (cmd == 'stop') castedDev.Stop();
