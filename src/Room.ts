@@ -2,6 +2,7 @@ import { DeviceCollection } from "./DeviceCollection";
 import { DeviceController } from "./DeviceController";
 import { DeviceType } from "./Enums/DeviceType";
 import { Trait } from "./Enums/Trait";
+import { ITemperature } from "./interfaces/Traits/ITemperature";
 import { RestApi } from "./RestApi";
 
 export class Room {
@@ -45,6 +46,23 @@ export class Room {
 			Devices: RestApi.generateDeviceStructure(this.Devices.Items),
 			Traits: this.GetTraits()
 		};
+
+		let temps: number[] = [];
+
+		for (let i in this.Devices.Items) {
+			let curDev = this.Devices.Items[i];
+
+			if (curDev.Traits.includes(Trait.Temperature)) {
+				temps.push((<ITemperature>curDev).Temperature);
+			}
+		}
+
+		if (temps.length > 0) {
+			//if (temps.length == 1) {
+				output.Temperature = temps[0];
+			//}
+			//TODO Implement this, if you have more than one sensor in a room
+		}
 
 		return JSON.stringify(output);
 	}
