@@ -7,6 +7,9 @@ import { IDevice } from "./interfaces/DeviceTypes/IDevice";
 import { IOpenClose } from "./interfaces/Traits/IOpenClose";
 import { IPosition } from "./interfaces/Traits/IPosition";
 import { IBrightness } from "./interfaces/Traits/IBrightness";
+import { ITemperatureSetting } from "./interfaces/Traits/ITemperatureSetting";
+import { ITemperature } from "./interfaces/Traits/ITemperature";
+import { IHumidity } from "./interfaces/Traits/IHumidity";
 import { DeviceController } from "./DeviceController";
 import { Trait } from "./Enums/Trait";
 import { Room } from "./Room";
@@ -123,6 +126,24 @@ export class RestApi {
 			{
 				let castedDev = curDev as IPosition;
 				dev.Position = castedDev.Position;
+			}
+
+			if (curDev.Traits.includes(Trait.TemperatureSetting))
+			{
+				let castedDev = curDev as ITemperatureSetting;
+				dev.TargetTemperature = castedDev.TargetTemperature;
+			}
+
+			if (curDev.Traits.includes(Trait.Temperature))
+			{
+				let castedDev = curDev as ITemperature;
+				dev.Temperature = castedDev.Temperature;
+			}
+
+			if (curDev.Traits.includes(Trait.Humidity))
+			{
+				let castedDev = curDev as IHumidity;
+				dev.Humidity = castedDev.Humidity;
 			}
 
 			ret.push(dev);

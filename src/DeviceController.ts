@@ -9,6 +9,7 @@ import { ShellyRGBW2Color } from "./Devices/ShellyRGBW2Color";
 import { ShellyRGBW2White } from "./Devices/ShellyRGBW2White";
 import { HomematicToggle } from "./Devices/HomematicToggle";
 import { Shelly25Shutter } from "./Devices/Shelly25Shutter";
+import { ChaserHeater } from "./Devices/ChaserHeater";
 
 import { IDevice } from "./interfaces/DeviceTypes/IDevice";
 import { IOnOff } from "./interfaces/Traits/IOnOff";
@@ -17,6 +18,7 @@ import { IBrightness } from "./interfaces/Traits/IBrightness";
 import { IOpenClose } from "./interfaces/Traits/IOpenClose";
 import { Trait } from "./Enums/Trait";
 import { IPosition } from "./interfaces/Traits/IPosition";
+import { ITemperatureSetting } from "./interfaces/Traits/ITemperatureSetting";
 
 export class DeviceController {
 	mqtt: MQTTHandler;
@@ -43,6 +45,8 @@ export class DeviceController {
 				return new RestToggle(devName, id);
 			case 'HomematicToggle':
 				return new HomematicToggle(devName, id);
+			case 'ChaserHeater':
+				return new ChaserHeater(devName, id, this.mqtt);
 
 			default:
 				throw 'Device class not found!';
@@ -87,6 +91,8 @@ export class DeviceController {
 			//TODO Rename me
 			if (cmd == 'up') castedDev.TurnUp();
 			else if (cmd == 'down') castedDev.TurnDown();
+			if (cmd == 'open') castedDev.TurnUp();
+			else if (cmd == 'close') castedDev.TurnDown();
 			else if (cmd == 'stop') castedDev.Stop();
 		}
 
@@ -96,6 +102,14 @@ export class DeviceController {
 
 			if (parseInt(cmd) >= 0 && parseInt(cmd) <= 100)
 				castedDev.SetPosition(parseInt(cmd));
+		}
+
+		if(dev.Traits.includes(Trait.TemperatureSetting))
+		{
+			let castedDev = dev as ITemperatureSetting;
+
+			if (parseFloat(cmd) >= 0 && parseInt(cmd) <= 100)
+				castedDev.SetTemperature(parseFloat(cmd));
 		}
 	}
 }
