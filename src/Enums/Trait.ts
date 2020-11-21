@@ -3,5 +3,8 @@ export enum Trait {
     RGB,
     OnOff,
     OpenClose,
-    Position
+    Position,
+    TemperatureSetting,
+    Temperature,
+    Humidity
 }

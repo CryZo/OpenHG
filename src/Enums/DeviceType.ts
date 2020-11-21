@@ -1,4 +1,5 @@
 export enum DeviceType {
 	Lights,
-	Blinds
+	Blinds,
+	Heater
 }
