@@ -2,6 +2,7 @@ import { DeviceCollection } from "./DeviceCollection";
 import { DeviceController } from "./DeviceController";
 import { DeviceType } from "./Enums/DeviceType";
 import { Trait } from "./Enums/Trait";
+import { IHumidity } from "./interfaces/Traits/IHumidity";
 import { ITemperature } from "./interfaces/Traits/ITemperature";
 import { RestApi } from "./RestApi";
 
@@ -30,6 +31,44 @@ export class Room {
 		return ret;
 	}
 
+	getAverageTemperature(): any {
+		let temps: number[] = [];
+
+		for (let i in this.Devices.Items) {
+			let curDev = this.Devices.Items[i];
+
+			if (curDev.Traits.includes(Trait.Temperature)) {
+				temps.push((<ITemperature>curDev).Temperature);
+			}
+		}
+
+		if (temps.length > 0) {
+			//if (temps.length == 1) {
+				return temps[0];
+			//}
+			//TODO Implement this, if you have more than one sensor in a room
+		}
+	}
+
+	getAverageHumidity(): any {
+		let temps: number[] = [];
+
+		for (let i in this.Devices.Items) {
+			let curDev = this.Devices.Items[i];
+
+			if (curDev.Traits.includes(Trait.Humidity)) {
+				temps.push((<IHumidity>curDev).Humidity);
+			}
+		}
+
+		if (temps.length > 0) {
+			//if (temps.length == 1) {
+				return temps[0];
+			//}
+			//TODO Implement this, if you have more than one sensor in a room
+		}
+	}
+
 	handleCommand(devType: DeviceType, cmd: string) {
 		this.Devices.Items.forEach(device => {
 			if (device.Type === devType) {
@@ -47,22 +86,11 @@ export class Room {
 			Traits: this.GetTraits()
 		};
 
-		let temps: number[] = [];
+		const tempTemp = this.getAverageTemperature();
+		if (tempTemp != undefined) output.Temperature = tempTemp;
 
-		for (let i in this.Devices.Items) {
-			let curDev = this.Devices.Items[i];
-
-			if (curDev.Traits.includes(Trait.Temperature)) {
-				temps.push((<ITemperature>curDev).Temperature);
-			}
-		}
-
-		if (temps.length > 0) {
-			//if (temps.length == 1) {
-				output.Temperature = temps[0];
-			//}
-			//TODO Implement this, if you have more than one sensor in a room
-		}
+		const tempHum = this.getAverageHumidity();
+		if (tempHum != undefined) output.Humidity = tempHum; 
 
 		return JSON.stringify(output);
 	}
