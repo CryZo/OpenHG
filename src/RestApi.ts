@@ -13,6 +13,8 @@ import { IHumidity } from "./interfaces/Traits/IHumidity";
 import { DeviceController } from "./DeviceController";
 import { Trait } from "./Enums/Trait";
 import { Room } from "./Room";
+import { IPower } from "./interfaces/Traits/IPower";
+import { IEnergy } from "./interfaces/Traits/IEnergy";
 
 //TODO Refactor me!
 
@@ -144,6 +146,18 @@ export class RestApi {
 			{
 				let castedDev = curDev as IHumidity;
 				dev.Humidity = castedDev.Humidity;
+			}
+
+			if (curDev.Traits.includes(Trait.Power))
+			{
+				let castedDev = curDev as IPower;
+				dev.Power = castedDev.Power;
+			}
+
+			if (curDev.Traits.includes(Trait.Energy))
+			{
+				let castedDev = curDev as IEnergy;
+				dev.Energy = castedDev.Energy;
 			}
 
 			ret.push(dev);
