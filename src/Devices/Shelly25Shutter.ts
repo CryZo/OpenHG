@@ -106,7 +106,7 @@ export class Shelly25Shutter implements IDevice, IOpenClose, ITemperature, IPowe
 		let tmpEnergy: number;
 
 		if (!isNaN(parseInt(payload))) {
-			tmpEnergy = parseInt(payload);
+			tmpEnergy = parseInt(payload) / 60;//m to h
 
 			if (tmpEnergy !== this.Energy) {
 				this.Energy = tmpEnergy;
