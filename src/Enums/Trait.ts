@@ -6,5 +6,7 @@ export enum Trait {
     Position,
     TemperatureSetting,
     Temperature,
-    Humidity
+    Humidity,
+    Power,
+    Energy
 }

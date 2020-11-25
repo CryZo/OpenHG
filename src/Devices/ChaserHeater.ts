@@ -17,6 +17,7 @@ export class ChaserHeater implements IDevice, IOnOff, ITemperatureSetting, ITemp
 	Status: boolean = false;
 	TargetTemperature: number = 0;
 	Temperature: number = 0;
+	IsRoomTemperature = true;
 	Humidity: number = 0;
 
 	mh: MQTTHandler;

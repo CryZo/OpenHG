@@ -38,7 +38,8 @@ export class Room {
 			let curDev = this.Devices.Items[i];
 
 			if (curDev.Traits.includes(Trait.Temperature)) {
-				temps.push((<ITemperature>curDev).Temperature);
+				if ((<ITemperature>curDev).IsRoomTemperature)
+					temps.push((<ITemperature>curDev).Temperature);
 			}
 		}
 
