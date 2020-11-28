@@ -1,6 +1,7 @@
 import { Color } from "./Color";
 
 import { Shelly1 } from "./Devices/Shelly1";
+import { Shelly1l } from "./Devices/Shelly1l";
 import { MQTTHandler } from "./MQTTHandler";
 import { TasmotaRGB } from "./Devices/TasmotaRGB";
 import { TasmotaSingleRelais } from "./Devices/TasmotaSingleRelais";
@@ -31,6 +32,8 @@ export class DeviceController {
 		switch (className) {
 			case 'Shelly1':
 				return new Shelly1(devName, id, this.mqtt);
+			case 'Shelly1l':
+				return new Shelly1l(devName, id, this.mqtt);
 			case 'ShellyRGBW2Color':
 				return new ShellyRGBW2Color(devName, id, this.mqtt);
 			case 'TasmotaRGB':
