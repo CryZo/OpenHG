@@ -8,5 +8,10 @@ export enum Trait {
     Temperature,
     Humidity,
     Power,
-    Energy
+    Energy,
+    Lux,
+    Illumination,
+    Battery,
+    Vibration,
+    OpenCloseStatus
 }
