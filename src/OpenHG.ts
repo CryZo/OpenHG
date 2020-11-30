@@ -81,3 +81,15 @@ global.rooms = rooms;
 global.eventHandler = new Events();
 
 new MQTTControls(mqtt);
+
+/*
+ * Automation logic - import it from your repo!
+ */
+import * as automation from "./Automation";
+if ((<any>automation).logic !== undefined) {
+	console.info('Automation logic found. Launching module.');
+	(<any>automation).logic.run();
+}
+else {
+	console.info('No automation logic was found.');
+}
