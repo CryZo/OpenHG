@@ -84,12 +84,21 @@ new MQTTControls(mqtt);
 
 /*
  * Automation logic - import it from your repo!
+ * 
+ * 1. Clone your Repo to /src/Automation
+ * 2. Copy your dependencies to /node_modules
  */
-import * as automation from "./Automation";
-if ((<any>automation).logic !== undefined) {
-	console.info('Automation logic found. Launching module.');
-	(<any>automation).logic.run();
+try {
+	const automation = require("./Automation");
+
+	try {
+		console.info('Automation logic found. Launching module.');
+		(<any>automation).Logic.Run(rooms);
+	}
+	catch (err) {
+		console.error(err);
+	}
 }
-else {
+catch {
 	console.info('No automation logic was found.');
 }
