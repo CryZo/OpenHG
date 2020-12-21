@@ -1,11 +1,11 @@
-import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { Device } from "../Device";
 import { IRGB } from "../interfaces/Traits/IRGB";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
 import { Color } from "../Color";
 import { Trait } from "../Enums/Trait";
 
-export class TasmotaRGB implements IDevice, IRGB {
+export class TasmotaRGB  extends Device implements IRGB {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
@@ -27,6 +27,8 @@ export class TasmotaRGB implements IDevice, IRGB {
 	tasmotaDevId: string;
 
 	constructor(Name: string, id: string, mh: MQTTHandler) {
+		super();
+		
 		this.Name = Name;
 		this._id = id;
 		this.mh = mh;

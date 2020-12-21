@@ -12,7 +12,7 @@ import { HomematicToggle } from "./Devices/HomematicToggle";
 import { Shelly25Shutter } from "./Devices/Shelly25Shutter";
 import { ChaserHeater } from "./Devices/ChaserHeater";
 
-import { IDevice } from "./interfaces/DeviceTypes/IDevice";
+import { Device } from "./Device";
 import { IOnOff } from "./interfaces/Traits/IOnOff";
 import { IRGB } from "./interfaces/Traits/IRGB";
 import { IBrightness } from "./interfaces/Traits/IBrightness";
@@ -20,6 +20,7 @@ import { IOpenClose } from "./interfaces/Traits/IOpenClose";
 import { Trait } from "./Enums/Trait";
 import { IPosition } from "./interfaces/Traits/IPosition";
 import { ITemperatureSetting } from "./interfaces/Traits/ITemperatureSetting";
+import { ShellyDW2 } from "./Devices/ShellyDW2";
 
 export class DeviceController {
 	mqtt: MQTTHandler;
@@ -42,6 +43,8 @@ export class DeviceController {
 				return new ShellyRGBW2White(devName, id, this.mqtt);
 			case 'Shelly25Shutter':
 				return new Shelly25Shutter(devName, id, this.mqtt);
+			case 'ShellyDW2':
+				return new ShellyDW2(devName, id, this.mqtt);
 			case 'TasmotaSingleRelais':
 				return new TasmotaSingleRelais(devName, id, this.mqtt);
 			case 'RestToggle':
@@ -56,7 +59,7 @@ export class DeviceController {
 		}
 	}
 
-	static HandleCommand(dev: IDevice, cmd: string) {
+	static HandleCommand(dev: Device, cmd: string) {
 		if(dev.Traits.includes(Trait.OnOff))
 		{
 			let castedDev = dev as IOnOff;

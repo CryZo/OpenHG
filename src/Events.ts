@@ -1,4 +1,4 @@
-import { IDevice } from "./interfaces/DeviceTypes/IDevice";
+import { Device } from "./Device";
 
 interface IEvents {
     change: Function[];
@@ -21,7 +21,7 @@ export class Events {
         }
     }
 
-    public fire(event: keyof IEvents, device: IDevice): void {
+    public fire(event: keyof IEvents, device: Device): void {
         if (this.callbacks[event] != null) {
             this.callbacks[event].forEach(cb => {
                 cb(device, event);
@@ -29,3 +29,5 @@ export class Events {
         }
     }
 }
+
+//TODO Refactoring: https://hackwild.com/article/event-handling-techniques/

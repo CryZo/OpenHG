@@ -1,10 +1,10 @@
-import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { Device } from "../Device";
 import { IBrightness } from "../interfaces/Traits/IBrightness";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
 import { Trait } from "../Enums/Trait";
 
-export class ShellyRGBW2White implements IDevice, IBrightness {
+export class ShellyRGBW2White  extends Device implements IBrightness {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
@@ -25,6 +25,8 @@ export class ShellyRGBW2White implements IDevice, IBrightness {
 	outputNo: number;
 
 	constructor(Name: string, id: string, mh: MQTTHandler) {
+		super();
+		
 		this.Name = Name;
 		this._id = id;
 		this.mh = mh;

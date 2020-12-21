@@ -1,4 +1,4 @@
-import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { Device } from "../Device";
 import { ITemperature } from "../interfaces/Traits/ITemperature";
 import { IOpenCloseStatus } from "../interfaces/Traits/IOpenCloseStatus";
 import { IIllumination } from "../interfaces/Traits/IIllumination";
@@ -10,7 +10,7 @@ import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
 import { Trait } from "../Enums/Trait";
 
-export class ShellyDW2 implements IDevice, IOpenCloseStatus, ITemperature, ILux, IIllumination, IBattery, IVibration {
+export class ShellyDW2  extends Device implements IOpenCloseStatus, ITemperature, ILux, IIllumination, IBattery, IVibration {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Blinds;
@@ -35,6 +35,8 @@ export class ShellyDW2 implements IDevice, IOpenCloseStatus, ITemperature, ILux,
 	shellyDevId: string;
 
 	constructor(Name: string, id: string, mh: MQTTHandler) {
+		super();
+		
 		this.Name = Name;
 		this._id = id;
 		this.mh = mh;
@@ -47,9 +49,9 @@ export class ShellyDW2 implements IDevice, IOpenCloseStatus, ITemperature, ILux,
 		this.mh.Subscribe(`shellies/shellydw2-${this.shellyDevId}/sensor/battery`, this.onMQTTBattery.bind(this));
 	}
 
-	onMQTTStatus(payload: string): void {
+	onMQTTStatus(payload: Buffer): void {
 		let tmpStatus: boolean;
-		switch (payload) {
+		switch (payload.toString()) {
 			case 'open':
 				tmpStatus = true;
 				break;
@@ -62,11 +64,14 @@ export class ShellyDW2 implements IDevice, IOpenCloseStatus, ITemperature, ILux,
 		if (tmpStatus !== undefined && tmpStatus !== this.Status) {
 			this.Status = tmpStatus;
 			global.eventHandler.fire('change', this);
+
+			if (this.Status) this.emit('open');
+			else             this.emit('close');
 		}
 	}
-	onMQTTVibration(payload: string): void {
+	onMQTTVibration(payload: Buffer): void {
 		let tmpStatus: boolean;
-		switch (payload) {
+		switch (payload.toString()) {
 			case '1':
 				tmpStatus = true;
 				break;
@@ -81,11 +86,11 @@ export class ShellyDW2 implements IDevice, IOpenCloseStatus, ITemperature, ILux,
 			global.eventHandler.fire('change', this);
 		}
 	}
-	onMQTTLux(payload: string): void {
+	onMQTTLux(payload: Buffer): void {
 		let tmpVal: number;
 
-		if (!isNaN(parseInt(payload))) {
-			tmpVal = parseInt(payload);
+		if (!isNaN(parseInt(payload.toString()))) {
+			tmpVal = parseInt(payload.toString());
 
 			if (tmpVal !== this.Lux) {
 				this.Lux = tmpVal;
@@ -93,11 +98,11 @@ export class ShellyDW2 implements IDevice, IOpenCloseStatus, ITemperature, ILux,
 			}
 		}
 	}
-	onMQTTBattery(payload: string): void {
+	onMQTTBattery(payload: Buffer): void {
 		let tmpVal: number;
 
-		if (!isNaN(parseInt(payload))) {
-			tmpVal = parseInt(payload);
+		if (!isNaN(parseInt(payload.toString()))) {
+			tmpVal = parseInt(payload.toString());
 
 			if (tmpVal !== this.Battery) {
 				this.Battery = tmpVal;

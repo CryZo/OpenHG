@@ -1,11 +1,11 @@
-import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { Device } from "../Device";
 import { IOnOff } from "../interfaces/Traits/IOnOff";
 import { DeviceType } from "../Enums/DeviceType";
 import * as https from "https";
 import * as http from "http";
 import { Trait } from "../Enums/Trait";
 
-export class RestToggle implements IDevice, IOnOff {
+export class RestToggle  extends Device implements IOnOff {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
@@ -21,6 +21,8 @@ export class RestToggle implements IDevice, IOnOff {
 	aog_Attributes: any = {};
 
 	constructor(Name: string, id: string) {
+		super();
+		
 		this.Name = Name;
 		this._id = id;
 	}

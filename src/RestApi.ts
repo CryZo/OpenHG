@@ -3,7 +3,7 @@ import { RoomCollection } from "./RoomCollection";
 import { DeviceType } from "./Enums/DeviceType";
 import { IOnOff } from "./interfaces/Traits/IOnOff";
 import { IRGB } from "./interfaces/Traits/IRGB";
-import { IDevice } from "./interfaces/DeviceTypes/IDevice";
+import { Device } from "./Device";
 import { IOpenClose } from "./interfaces/Traits/IOpenClose";
 import { IPosition } from "./interfaces/Traits/IPosition";
 import { IBrightness } from "./interfaces/Traits/IBrightness";
@@ -88,7 +88,7 @@ export class RestApi {
 		res.status(200).end();
 	}
 
-	static generateDeviceStructure(data: IDevice[]): any {//TODO Refactor me and then move me to DeviceCollection.ts
+	static generateDeviceStructure(data: Device[]): any {//TODO Refactor me and then move me to DeviceCollection.ts
 		let ret: any[] = [];
 
 		for (let d in data) {

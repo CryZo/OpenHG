@@ -1,5 +1,5 @@
-import { IDevice } from "../DeviceTypes/IDevice";
+import { Device } from "../../Device";
 
-export interface ILux extends IDevice {
+export interface ILux extends Device {
 	Lux: number;
 }

@@ -1,14 +1,14 @@
-import { IDevice } from "./interfaces/DeviceTypes/IDevice";
+import { Device } from "./Device";
 import { ICollection } from "./interfaces/ICollection";
 
 export class DeviceCollection implements ICollection {
-	Items: IDevice[] = [];
+	Items: Device[] = [];
 
-	Add(dev: IDevice): void {
+	Add(dev: Device): void {
 		this.Items.push(dev);
 	}
 
-	GetById(id: string): IDevice {
+	GetById(id: string): Device {
 		for (let i in this.Items) {
 			if (this.Items[i]._id == id) {
 				return this.Items[i];
