@@ -1,7 +1,7 @@
 import { BlindStatus } from "../../Enums/BlindStatus";
-import { IDevice } from "../DeviceTypes/IDevice";
+import { Device } from "../../Device";
 
-export interface IOpenClose extends IDevice {
+export interface IOpenClose extends Device {
 	MovementStatus: BlindStatus;
 
 	TurnUp(): void;

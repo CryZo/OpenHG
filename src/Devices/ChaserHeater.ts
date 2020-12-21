@@ -3,12 +3,12 @@ import { ITemperatureSetting } from "../interfaces/Traits/ITemperatureSetting";
 import { ITemperature } from "../interfaces/Traits/ITemperature";
 import { IHumidity } from "../interfaces/Traits/IHumidity";
 
-import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { Device } from "../Device";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
 import { Trait } from "../Enums/Trait";
 
-export class ChaserHeater implements IDevice, IOnOff, ITemperatureSetting, ITemperature, IHumidity {
+export class ChaserHeater extends Device implements IOnOff, ITemperatureSetting, ITemperature, IHumidity {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Heater;
@@ -29,10 +29,11 @@ export class ChaserHeater implements IDevice, IOnOff, ITemperatureSetting, ITemp
 	aog_Attributes: any = {};
 
 	constructor(Name: string, id: string, mh: MQTTHandler) {
+		super();
+
 		this.Name = Name;
 		this._id = id;
 		this.mh = mh;
-
 	}
 	Run(): void {
 		this.mh.Subscribe(`${this.devId}/status`, this.onMQTTStatus.bind(this));

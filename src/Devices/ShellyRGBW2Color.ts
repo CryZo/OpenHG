@@ -1,11 +1,11 @@
-import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { Device } from "../Device";
 import { IRGB } from "../interfaces/Traits/IRGB";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
 import { Color } from "../Color";
 import { Trait } from "../Enums/Trait";
 
-export class ShellyRGBW2Color implements IDevice, IRGB {
+export class ShellyRGBW2Color  extends Device implements IRGB {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
@@ -27,6 +27,8 @@ export class ShellyRGBW2Color implements IDevice, IRGB {
 	effect: number = 0;
 
 	constructor(Name: string, id: string, mh: MQTTHandler) {
+		super();
+		
 		this.Name = Name;
 		this._id = id;
 		this.mh = mh;

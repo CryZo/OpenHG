@@ -1,4 +1,4 @@
-import { IDevice } from "../interfaces/DeviceTypes/IDevice";
+import { Device } from "../Device";
 import { IOpenClose } from "../interfaces/Traits/IOpenClose";
 import { DeviceType } from "../Enums/DeviceType";
 import { MQTTHandler } from "../MQTTHandler";
@@ -8,7 +8,7 @@ import { ITemperature } from "../interfaces/Traits/ITemperature";
 import { IPower } from "../interfaces/Traits/IPower";
 import { IEnergy } from "../interfaces/Traits/IEnergy";
 
-export class Shelly25Shutter implements IDevice, IOpenClose, ITemperature, IPower, IEnergy {
+export class Shelly25Shutter  extends Device implements IOpenClose, ITemperature, IPower, IEnergy {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Blinds;
@@ -33,6 +33,8 @@ export class Shelly25Shutter implements IDevice, IOpenClose, ITemperature, IPowe
 	shellyDevId: string;
 
 	constructor(Name: string, id: string, mh: MQTTHandler) {
+		super();
+		
 		this.Name = Name;
 		this._id = id;
 		this.mh = mh;

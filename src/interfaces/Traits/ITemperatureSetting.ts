@@ -1,6 +1,6 @@
-import { IDevice } from "../DeviceTypes/IDevice";
+import { Device } from "../../Device";
 
-export interface ITemperatureSetting extends IDevice {
+export interface ITemperatureSetting extends Device {
 	TargetTemperature: number;
 
 	SetTemperature(value: number): void;

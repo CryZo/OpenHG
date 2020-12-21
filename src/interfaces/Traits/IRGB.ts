@@ -1,7 +1,7 @@
 import { Color } from "../../Color";
-import { IDevice } from "../DeviceTypes/IDevice";
+import { Device } from "../../Device";
 
-export interface IRGB extends IDevice {
+export interface IRGB extends Device {
 	Color: Color;
 
 	SetColor(col: Color): void;

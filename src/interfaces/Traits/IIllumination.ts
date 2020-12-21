@@ -1,5 +1,5 @@
-import { IDevice } from "../DeviceTypes/IDevice";
+import { Device } from "../../Device";
 
-export interface IIllumination extends IDevice {
+export interface IIllumination extends Device {
 	Illumination: number;
 }

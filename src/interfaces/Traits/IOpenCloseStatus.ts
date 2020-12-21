@@ -1,6 +1,6 @@
 import { BlindStatus } from "../../Enums/BlindStatus";
-import { IDevice } from "../DeviceTypes/IDevice";
+import { Device } from "../../Device";
 
-export interface IOpenCloseStatus extends IDevice {
+export interface IOpenCloseStatus extends Device {
 	Status: boolean;
 }

@@ -1,5 +1,5 @@
-import { IDevice } from "../DeviceTypes/IDevice";
+import { Device } from "../../Device";
 
-export interface IHumidity extends IDevice {
+export interface IHumidity extends Device {
 	Humidity: number;
 }

@@ -1,6 +1,6 @@
-import { IDevice } from "../DeviceTypes/IDevice";
+import { Device } from "../../Device";
 
-export interface IOnOff extends IDevice {
+export interface IOnOff extends Device {
 	Status: boolean;
 
 	TurnOn(): void;

@@ -1,6 +1,6 @@
 import { DeviceController } from "./DeviceController";
 import { DeviceType } from "./Enums/DeviceType";
-import { IDevice } from "./interfaces/DeviceTypes/IDevice";
+import { Device } from "./Device";
 import { MQTTHandler } from "./MQTTHandler";
 
 export class MQTTControls {
@@ -40,7 +40,7 @@ export class MQTTControls {
         };
     }
 
-    publishEvent(payload: IDevice, type: string) {
+    publishEvent(payload: Device, type: string) {
         this.handler.SendCommand(`open-hg/event/${type}/${payload._id}`, JSON.stringify(payload, (key, value) => {
             if (key.substr(0, 1) == '_') {
               return undefined;
