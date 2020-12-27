@@ -15,6 +15,7 @@ export class ChaserHeater extends Device implements IOnOff, ITemperatureSetting,
 	Traits: Trait[] = [Trait.OnOff, Trait.TemperatureSetting, Trait.Temperature, Trait.Humidity];
 
 	Status: boolean = false;
+	AutomationTemperature: number = 0;
 	TargetTemperature: number = 0;
 	Temperature: number = 0;
 	IsRoomTemperature = true;
