@@ -31,7 +31,7 @@ export class Room {
 		return ret;
 	}
 
-	getAverageTemperature(): any {
+	getAverageTemperature(): number {
 		let temps: number[] = [];
 
 		for (let i in this.Devices.Items) {
@@ -51,7 +51,7 @@ export class Room {
 		}
 	}
 
-	getAverageHumidity(): any {
+	getAverageHumidity(): number {
 		let temps: number[] = [];
 
 		for (let i in this.Devices.Items) {
