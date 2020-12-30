@@ -21,6 +21,7 @@ import { Trait } from "./Enums/Trait";
 import { IPosition } from "./interfaces/Traits/IPosition";
 import { ITemperatureSetting } from "./interfaces/Traits/ITemperatureSetting";
 import { ShellyDW2 } from "./Devices/ShellyDW2";
+import { FireTree } from "./Devices/FireTree";
 
 export class DeviceController {
 	mqtt: MQTTHandler;
@@ -53,6 +54,8 @@ export class DeviceController {
 				return new HomematicToggle(devName, id);
 			case 'ChaserHeater':
 				return new ChaserHeater(devName, id, this.mqtt);
+			case 'FireTree':
+				return new FireTree(devName, id, this.mqtt);
 
 			default:
 				throw 'Device class not found!';
