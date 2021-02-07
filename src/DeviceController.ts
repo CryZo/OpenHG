@@ -79,7 +79,7 @@ export class DeviceController {
 			if (cmd == 'lightenColor') castedDev.LightenColor();
 			else if (cmd == 'darkenColor') castedDev.DarkenColor();
 
-			else if (cmd.length == 6) castedDev.SetColor(Color.Parse(cmd));
+			else if (cmd.toString().length == 6) castedDev.SetColor(Color.Parse(cmd.toString()));
 		}
 
 		if(dev.Traits.includes(Trait.Brightness))
