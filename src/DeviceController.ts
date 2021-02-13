@@ -7,6 +7,7 @@ import { TasmotaRGB } from "./Devices/TasmotaRGB";
 import { TasmotaSingleRelais } from "./Devices/TasmotaSingleRelais";
 import { RestToggle } from "./Devices/RestToggle";
 import { ShellyRGBW2Color } from "./Devices/ShellyRGBW2Color";
+import { ShellyRGBW2ColorAndWhite } from "./Devices/ShellyRGBW2ColorAndWhite";
 import { ShellyRGBW2White } from "./Devices/ShellyRGBW2White";
 import { HomematicToggle } from "./Devices/HomematicToggle";
 import { Shelly25Shutter } from "./Devices/Shelly25Shutter";
@@ -38,6 +39,8 @@ export class DeviceController {
 				return new Shelly1l(devName, id, this.mqtt);
 			case 'ShellyRGBW2Color':
 				return new ShellyRGBW2Color(devName, id, this.mqtt);
+			case 'ShellyRGBW2ColorAndWhite':
+				return new ShellyRGBW2ColorAndWhite(devName, id, this.mqtt);
 			case 'TasmotaRGB':
 				return new TasmotaRGB(devName, id, this.mqtt);
 			case 'ShellyRGBW2White':
