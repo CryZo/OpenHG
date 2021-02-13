@@ -64,6 +64,13 @@ export class ShellyRGBW2ColorAndWhite  extends Device implements IRGB, IBrightne
 				global.eventHandler.fire('change', this);
 			}
 		}
+		
+		if (data.white != undefined) {
+			if (Math.floor(data.white / 255 * 100) !== this.Brightness) {
+				this.Brightness = Math.floor(data.white / 255 * 100);
+				global.eventHandler.fire('change', this);
+			}
+		}
 	}
 
 	TurnOn(): void {
@@ -88,7 +95,7 @@ export class ShellyRGBW2ColorAndWhite  extends Device implements IRGB, IBrightne
 			"green": col.Green,
 			"blue": col.Blue,
 			"gain": 100,
-			"white": this.Brightness,
+			"white": Math.floor(this.Brightness / 100 * 255),
 			"effect": this.effect,
 			"turn": "on"
 		}));
@@ -118,9 +125,9 @@ export class ShellyRGBW2ColorAndWhite  extends Device implements IRGB, IBrightne
 	SetBrightness(value: number): void {
 		if (value > 100) value = 100;
 		if (value < 0) value = 0;
-		this.Brightness = Math.floor(value / 100 * 255);;
+		this.Brightness = value;
 
-		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/color/0/set`, JSON.stringify({white: this.Brightness, turn: 'on'}));
+		this.mh.SendCommand(`shellies/shellyrgbw2-${this.shellyDevId}/color/0/set`, JSON.stringify({white: Math.floor(value / 100 * 255), turn: 'on'}));
 		global.eventHandler.fire('change', this);
 	}
 
