@@ -2,11 +2,13 @@ import { Device } from "./Device";
 
 interface IEvents {
     change: Function[];
+    input: Function[];
 }
 
 export class Events {
     private callbacks: IEvents = {
-        change: []
+        change: [],
+        input: []
     }
 
     public registerCallback(cb: Function, event?: keyof IEvents): void {
@@ -21,10 +23,10 @@ export class Events {
         }
     }
 
-    public fire(event: keyof IEvents, device: Device): void {
+    public fire(event: keyof IEvents, device: Device, optionalData: {[name: string]: any} = {}): void {
         if (this.callbacks[event] != null) {
             this.callbacks[event].forEach(cb => {
-                cb(device, event);
+                cb(device, event, optionalData);
             });
         }
     }

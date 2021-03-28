@@ -28,6 +28,8 @@ export class Shelly1l  extends Device implements IOnOff {
 	}
 	Run(): void {
 		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/relay/0`, this.onMQTT.bind(this))
+		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/input/0`, payload => this.onMQTTInput(0, payload));
+		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/input/1`, payload => this.onMQTTInput(1, payload));
 	}
 
 	onMQTT(payload: string) {
@@ -38,6 +40,13 @@ export class Shelly1l  extends Device implements IOnOff {
 			this.Status = tmpStatus;
 			global.eventHandler.fire('change', this);
 		}
+	}
+
+	onMQTTInput(number: number, payload: string) {
+		global.eventHandler.fire('input', this, {
+			inputNumber: number,
+			inputStatus: payload === '1'
+		});
 	}
  
 	TurnOn(): void {
