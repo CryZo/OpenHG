@@ -10,6 +10,7 @@ export class Shelly1l  extends Device implements IOnOff {
 	Type: DeviceType = DeviceType.Lights;
 	Status: boolean = false;
 	Traits: Trait[] = [Trait.OnOff];
+	InputStatus: Boolean[] = [null, null];
 
 	mh: MQTTHandler;
 	shellyDevId: string;
@@ -27,9 +28,9 @@ export class Shelly1l  extends Device implements IOnOff {
 		this.mh = mh;
 	}
 	Run(): void {
-		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/relay/0`, this.onMQTT.bind(this))
-		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/input/0`, payload => this.onMQTTInput(0, payload));
-		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/input/1`, payload => this.onMQTTInput(1, payload));
+		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/relay/0`, this.onMQTT.bind(this));
+		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/input/0`, payload => this.onMQTTInput(payload, 0));
+		this.mh.Subscribe(`shellies/shelly1l-${this.shellyDevId}/input/1`, payload => this.onMQTTInput(payload, 1));
 	}
 
 	onMQTT(payload: string) {
@@ -42,11 +43,16 @@ export class Shelly1l  extends Device implements IOnOff {
 		}
 	}
 
-	onMQTTInput(number: number, payload: string) {
-		global.eventHandler.fire('input', this, {
-			inputNumber: number,
-			inputStatus: payload === '1'
-		});
+	onMQTTInput(payload: string, number: number) {
+		let status = payload.toString() === '1';
+		if (this.InputStatus[number] === null) this.InputStatus[number] = status;
+		else if (status !== this.InputStatus[number]) {
+			this.InputStatus[number] = status;
+			this.emit('input', {
+				inputNumber: number,
+				inputStatus: status
+			});
+		}
 	}
  
 	TurnOn(): void {

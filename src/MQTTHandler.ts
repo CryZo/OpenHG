@@ -46,6 +46,7 @@ export class MQTTHandler {
 	}
 
 	Subscribe(topic: string, callback: (payload: string, topic?: string) => void): void {
+		// if (topic === 'shellies/shelly1l-84CCA8ADEE79/input/1') debugger;
 		if (this.connected) {
 			this.Client.subscribe(topic, function (err) {
 				if (err) throw err;

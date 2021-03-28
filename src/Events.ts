@@ -2,13 +2,11 @@ import { Device } from "./Device";
 
 interface IEvents {
     change: Function[];
-    input: Function[];
 }
 
 export class Events {
     private callbacks: IEvents = {
-        change: [],
-        input: []
+        change: []
     }
 
     public registerCallback(cb: Function, event?: keyof IEvents): void {
