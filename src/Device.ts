@@ -1,6 +1,7 @@
 import { Trait } from "./Enums/Trait";
 import { DeviceType } from "./Enums/DeviceType";
 import { EventEmitter } from 'events'
+import { Room } from "./Room";
 
 export class Device extends EventEmitter {
     constructor() {
@@ -12,6 +13,7 @@ export class Device extends EventEmitter {
     Type: DeviceType;
     Traits: Trait[];
     AllowAutomation = true;
+    Room: Room;
     
     Run(): void {}
 

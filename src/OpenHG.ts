@@ -10,6 +10,7 @@ import path from "path";
 //import { Google } from "./Integrations/Google";
 import { Events } from "./Events";
 import { MQTTControls } from "./MQTTControls";
+import { Device } from "./Device";
 
 //Load config
 var config: any = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), { encoding: 'utf8' }));
@@ -36,30 +37,32 @@ for (let i in config.Rooms) {
 //Create devices and add them to the room
 for (let i in config.Devices) {
 	let curObj: any = config.Devices[i];
-	let newDev: any = dc.GetClass(curObj.Class, curObj.Name, i);
+	let newDev: Device = dc.GetClass(curObj.Class, curObj.Name, i);
 
 	//Apply extra parameters
 	if (curObj.extraParams) {
 		for (let param in curObj.extraParams) {
-			newDev[param] = curObj.extraParams[param];
+			(<any>newDev)[param] = curObj.extraParams[param];
 		}
 	}
 
+	// TODO Refactor or purge me
 	//Apply AoG types/traits (if set)
-	if (curObj.aog_type && curObj.aog_traits) {
-		newDev.aog_type = curObj.aog_type;
-		newDev.aog_traits = curObj.aog_traits;
-		if (curObj.aog_attributes)
-			newDev.aog_Attributes = curObj.aog_attributes;
-	}
+	// if (curObj.aog_Type && curObj.aog_Traits) {
+	// 	newDev.aog_Type = curObj.aog_Type;
+	// 	newDev.aog_Traits = curObj.aog_Traits;
+	// 	if (curObj.aog_Attributes)
+	// 		newDev.aog_Attributes = curObj.aog_Attributes;
+	// }
 
 	//Init
 	newDev.Run();
 
 	//Add to room
-
 	try {
-		rooms.GetById(curObj.Room).Devices.Add(newDev);
+		const room = rooms.GetById(curObj.Room);
+		room.Devices.Add(newDev);
+		newDev.Room = room;
 	}
 	catch(e) {
 		console.error(e);
