@@ -84,6 +84,8 @@ export class ShellyDW2  extends Device implements IOpenCloseStatus, ITemperature
 		if (tmpStatus !== undefined && tmpStatus !== this.Vibration) {
 			this.Vibration = tmpStatus;
 			global.eventHandler.fire('change', this);
+
+			if (this.Vibration) this.emit('vibration');
 		}
 	}
 	onMQTTLux(payload: Buffer): void {
