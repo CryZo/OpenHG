@@ -1,5 +1,4 @@
-import { Events } from "../Events";
-import { RoomCollection } from "../RoomCollection";
+import { Events, RoomCollection } from "../";
 
 declare global {
     namespace NodeJS  {

@@ -1,5 +1,5 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IIllumination extends Device {
+export default interface IIllumination extends Device {
 	Illumination: number;
 }

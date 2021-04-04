@@ -1,6 +1,6 @@
 import mqtt, { MqttClient } from "mqtt";
 
-export class MQTTHandler {
+export default class MQTTHandler {
 	url: string;
 	connected: boolean = false;
 

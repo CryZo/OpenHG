@@ -1,8 +1,7 @@
-import { Room } from "./Room";
-import { ICollection } from "./interfaces/ICollection";
-import { DeviceCollection } from "./DeviceCollection";
+import { DeviceCollection, Room } from "./";
+import ICollection from "./interfaces/ICollection";
 
-export class RoomCollection implements ICollection {
+export default class RoomCollection implements ICollection {
 	Items: Room[] = [];
 	
 	Add(room: Room): void {

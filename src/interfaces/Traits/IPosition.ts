@@ -1,7 +1,6 @@
-import { BlindStatus } from "../../Enums/BlindStatus";
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IPosition extends Device {
+export default interface IPosition extends Device {
 	Position: number;
 
 	SetPosition(pos: number): void;

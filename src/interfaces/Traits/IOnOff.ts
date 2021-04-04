@@ -1,6 +1,6 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IOnOff extends Device {
+export default interface IOnOff extends Device {
 	Status: boolean;
 
 	TurnOn(): void;

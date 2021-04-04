@@ -1,11 +1,10 @@
-import { Device } from "../Device";
-import { IOnOff } from "../interfaces/Traits/IOnOff";
-import { DeviceType } from "../Enums/DeviceType";
+import { Device } from "../";
+import { DeviceType, Trait } from "../Enums";
+import { IOnOff } from "../interfaces/Traits";
 import * as https from "https";
 import * as http from "http";
-import { Trait } from "../Enums/Trait";
 
-export class HomematicToggle  extends Device implements IOnOff {
+export default class HomematicToggle  extends Device implements IOnOff {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
@@ -15,11 +14,6 @@ export class HomematicToggle  extends Device implements IOnOff {
 
 	ApiURL: string;
 	IseId: number;
-
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff'];
-	aog_Attributes: any = {};
 
 	constructor(Name: string, id: string) {
 		super();

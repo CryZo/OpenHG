@@ -1,10 +1,10 @@
-import { BlindStatus } from "../../Enums/BlindStatus";
-import { Device } from "../../Device";
+import { BlindStatus } from "../../Enums";
+import { Device } from "../../";
 
-export interface IOpenClose extends Device {
+export default interface IOpenClose extends Device {
 	MovementStatus: BlindStatus;
 
-	TurnUp(): void;
-	TurnDown(): void;
+	Open(): void;
+	Close(): void;
 	Stop(): void;
 }

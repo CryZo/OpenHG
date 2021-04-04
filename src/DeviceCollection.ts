@@ -1,7 +1,7 @@
-import { Device } from "./Device";
-import { ICollection } from "./interfaces/ICollection";
+import { Device } from "./";
+import ICollection from "./interfaces/ICollection";
 
-export class DeviceCollection implements ICollection {
+export default class DeviceCollection implements ICollection {
 	Items: Device[] = [];
 
 	Add(dev: Device): void {

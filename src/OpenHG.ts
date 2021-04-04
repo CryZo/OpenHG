@@ -1,16 +1,8 @@
 #!/usr/bin/env node
 
-import { Room } from "./Room";
-import { MQTTHandler } from "./MQTTHandler";
-import { DeviceController } from "./DeviceController";
-import { RoomCollection } from "./RoomCollection";
-import { RestApi } from "./RestApi";
+import { Device, DeviceController, Events, MQTTControls, MQTTHandler, RestApi, Room, RoomCollection } from "./";
 import fs from 'fs';
 import path from "path";
-//import { Google } from "./Integrations/Google";
-import { Events } from "./Events";
-import { MQTTControls } from "./MQTTControls";
-import { Device } from "./Device";
 
 //Load config
 var config: any = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), { encoding: 'utf8' }));
@@ -46,15 +38,6 @@ for (let i in config.Devices) {
 		}
 	}
 
-	// TODO Refactor or purge me
-	//Apply AoG types/traits (if set)
-	// if (curObj.aog_Type && curObj.aog_Traits) {
-	// 	newDev.aog_Type = curObj.aog_Type;
-	// 	newDev.aog_Traits = curObj.aog_Traits;
-	// 	if (curObj.aog_Attributes)
-	// 		newDev.aog_Attributes = curObj.aog_Attributes;
-	// }
-
 	//Init
 	newDev.Run();
 
@@ -73,10 +56,6 @@ for (let i in config.Devices) {
 var rest: RestApi = new RestApi(rooms);
 
 if (config.Integrations) {
-	if ((<string[]>config.Integrations).includes('Google')){
-		//Init Google
-	//	var google = new Google(rooms);
-	}
 }
 
 

@@ -1,5 +1,5 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IBattery extends Device {
+export default interface IBattery extends Device {
 	Battery: number;
 }

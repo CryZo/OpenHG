@@ -1,4 +1,4 @@
-export interface ICollection {
+export default interface ICollection {
 	Items: any[];
 
 	Add(room: any): void;

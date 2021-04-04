@@ -1,5 +1,5 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IPower extends Device {
+export default interface IPower extends Device {
 	Power: number;
 }

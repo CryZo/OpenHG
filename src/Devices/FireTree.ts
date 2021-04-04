@@ -1,10 +1,8 @@
-import { Device } from "../Device";
-import { IBrightness } from "../interfaces/Traits/IBrightness";
-import { DeviceType } from "../Enums/DeviceType";
-import { MQTTHandler } from "../MQTTHandler";
-import { Trait } from "../Enums/Trait";
+import { Device, MQTTHandler } from "../";
+import { IBrightness } from "../interfaces/Traits";
+import { DeviceType, Trait } from "../Enums";
 
-export class FireTree  extends Device implements IBrightness {
+export default class FireTree  extends Device implements IBrightness {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
@@ -12,11 +10,6 @@ export class FireTree  extends Device implements IBrightness {
 	
 	Status: boolean = false;
 	Brightness: number = 0;
-
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff', 'action.devices.traits.ColorSetting']; //TODO
-	aog_Attributes: null;
 
 	lightenAmount: number = 20;
 

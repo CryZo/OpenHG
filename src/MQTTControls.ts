@@ -1,9 +1,7 @@
-import { DeviceController } from "./DeviceController";
-import { DeviceType } from "./Enums/DeviceType";
-import { Device } from "./Device";
-import { MQTTHandler } from "./MQTTHandler";
+import { Device, DeviceController, MQTTHandler } from "./";
+import { DeviceType } from "./Enums";
 
-export class MQTTControls {
+export default class MQTTControls {
     handler: MQTTHandler;
 
     constructor (mh: MQTTHandler) {

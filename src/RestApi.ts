@@ -1,24 +1,11 @@
 import express from "express";
-import { RoomCollection } from "./RoomCollection";
-import { DeviceType } from "./Enums/DeviceType";
-import { IOnOff } from "./interfaces/Traits/IOnOff";
-import { IRGB } from "./interfaces/Traits/IRGB";
-import { Device } from "./Device";
-import { IOpenClose } from "./interfaces/Traits/IOpenClose";
-import { IPosition } from "./interfaces/Traits/IPosition";
-import { IBrightness } from "./interfaces/Traits/IBrightness";
-import { ITemperatureSetting } from "./interfaces/Traits/ITemperatureSetting";
-import { ITemperature } from "./interfaces/Traits/ITemperature";
-import { IHumidity } from "./interfaces/Traits/IHumidity";
-import { DeviceController } from "./DeviceController";
-import { Trait } from "./Enums/Trait";
-import { Room } from "./Room";
-import { IPower } from "./interfaces/Traits/IPower";
-import { IEnergy } from "./interfaces/Traits/IEnergy";
+import { Device, DeviceController, Room, RoomCollection } from "./";
+import { DeviceType, Trait } from "./Enums";
+import { IOnOff, IRGB, IOpenClose, IPosition, IBrightness, ITemperatureSetting, ITemperature, IHumidity, IPower, IEnergy } from "./interfaces/Traits";
 
 //TODO Refactor me!
 
-export class RestApi {
+export default class RestApi {
 	model: RoomCollection;
 	app: express.Express;
 	server: any;

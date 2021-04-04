@@ -18,7 +18,6 @@ At the moment there's no GUI available. However there's a [CLI client](https://g
 
 # TODOs
 - [ ] Create a documentation
-	- [ ] AoG integration
 	- [X] Guide to add new device types
 	- [X] Guide to add new devices
 	- [ ] Configuration samples

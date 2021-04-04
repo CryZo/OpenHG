@@ -1,30 +1,9 @@
-import { Color } from "./Color";
+import { Color, Device, MQTTHandler } from "./";
+import { ChaserHeater, FireTree, HomematicToggle, RestToggle, Shelly1, Shelly1l, Shelly25Shutter, ShellyDW2, ShellyRGBW2Color, ShellyRGBW2ColorAndWhite, ShellyRGBW2White, TasmotaRGB, TasmotaSingleRelais } from "./Devices";
+import { IOnOff, IRGB, IBrightness, IOpenClose, IPosition, ITemperatureSetting } from "./interfaces/Traits/";
+import { Trait } from "./Enums";
 
-import { Shelly1 } from "./Devices/Shelly1";
-import { Shelly1l } from "./Devices/Shelly1l";
-import { MQTTHandler } from "./MQTTHandler";
-import { TasmotaRGB } from "./Devices/TasmotaRGB";
-import { TasmotaSingleRelais } from "./Devices/TasmotaSingleRelais";
-import { RestToggle } from "./Devices/RestToggle";
-import { ShellyRGBW2Color } from "./Devices/ShellyRGBW2Color";
-import { ShellyRGBW2ColorAndWhite } from "./Devices/ShellyRGBW2ColorAndWhite";
-import { ShellyRGBW2White } from "./Devices/ShellyRGBW2White";
-import { HomematicToggle } from "./Devices/HomematicToggle";
-import { Shelly25Shutter } from "./Devices/Shelly25Shutter";
-import { ChaserHeater } from "./Devices/ChaserHeater";
-
-import { Device } from "./Device";
-import { IOnOff } from "./interfaces/Traits/IOnOff";
-import { IRGB } from "./interfaces/Traits/IRGB";
-import { IBrightness } from "./interfaces/Traits/IBrightness";
-import { IOpenClose } from "./interfaces/Traits/IOpenClose";
-import { Trait } from "./Enums/Trait";
-import { IPosition } from "./interfaces/Traits/IPosition";
-import { ITemperatureSetting } from "./interfaces/Traits/ITemperatureSetting";
-import { ShellyDW2 } from "./Devices/ShellyDW2";
-import { FireTree } from "./Devices/FireTree";
-
-export class DeviceController {
+export default class DeviceController {
 	mqtt: MQTTHandler;
 
 	constructor(mqtt: MQTTHandler) {
@@ -101,10 +80,10 @@ export class DeviceController {
 			let castedDev = dev as IOpenClose;
 
 			//TODO Rename me
-			if (cmd == 'up') castedDev.TurnUp();
-			else if (cmd == 'down') castedDev.TurnDown();
-			if (cmd == 'open') castedDev.TurnUp();
-			else if (cmd == 'close') castedDev.TurnDown();
+			if (cmd == 'up') castedDev.Open();
+			else if (cmd == 'down') castedDev.Close();
+			if (cmd == 'open') castedDev.Open();
+			else if (cmd == 'close') castedDev.Close();
 			else if (cmd == 'stop') castedDev.Stop();
 		}
 

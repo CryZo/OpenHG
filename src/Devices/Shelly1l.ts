@@ -1,10 +1,8 @@
-import { IOnOff } from "../interfaces/Traits/IOnOff";
-import { Device } from "../Device";
-import { DeviceType } from "../Enums/DeviceType";
-import { MQTTHandler } from "../MQTTHandler";
-import { Trait } from "../Enums/Trait";
+import { Device, MQTTHandler } from "../";
+import { DeviceType, Trait } from "../Enums";
+import { IOnOff } from "../interfaces/Traits";
 
-export class Shelly1l  extends Device implements IOnOff {
+export default class Shelly1l  extends Device implements IOnOff {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
@@ -14,11 +12,6 @@ export class Shelly1l  extends Device implements IOnOff {
 
 	mh: MQTTHandler;
 	shellyDevId: string;
-
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff'];
-	aog_Attributes: any = {};
 
 	constructor(Name: string, id: string, mh: MQTTHandler) {
 		super();
