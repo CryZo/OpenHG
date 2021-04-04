@@ -40,16 +40,18 @@ export class MQTTControls {
         };
     }
 
-    publishEvent(payload: Device, type: string) {
-        this.handler.SendCommand(`open-hg/event/${type}/${payload._id}`, JSON.stringify(payload, (key, value) => {
-            if (key.substr(0, 1) == '_') {
-              return undefined;
-            }
+    //TODO Move this to the new event system
+    // publishEvent(payload: Device, type: string) {
+    //     this.handler.SendCommand(`open-hg/event/${type}/${payload._id}`, JSON.stringify(payload, (key, value) => {
+    //         if (key.substr(0, 1) == '_') {
+    //           return undefined;
+    //         }
             
-            return value;
-          }));
-    }
+    //         return value;
+    //       }));
+    // }
 
+    //TODO Move this to the new event system
     publishModel(payload: any, type: string) {
         this.handler.SendRetainedCommand(`open-hg/full`, global.rooms.stringify());
     }
