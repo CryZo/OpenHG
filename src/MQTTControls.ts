@@ -41,7 +41,7 @@ export class MQTTControls {
     }
 
     //TODO Move this to the new event system
-    // publishEvent(payload: Device, type: string) {
+    publishEvent(payload: Device, type: string) {
     //     this.handler.SendCommand(`open-hg/event/${type}/${payload._id}`, JSON.stringify(payload, (key, value) => {
     //         if (key.substr(0, 1) == '_') {
     //           return undefined;
@@ -49,7 +49,7 @@ export class MQTTControls {
             
     //         return value;
     //       }));
-    // }
+    }
 
     //TODO Move this to the new event system
     publishModel(payload: any, type: string) {
