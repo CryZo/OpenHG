@@ -11,13 +11,6 @@ export default class TasmotaRGB  extends Device implements IRGB {
 	Status: boolean = false;
 	Color: Color = Color.GetBlack();
 
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff', 'action.devices.traits.ColorSetting'];
-	aog_Attributes: any = {
-		colorModel: 'rgb'
-	};
-
 	lightenAmount: number = 20;
 
 	mh: MQTTHandler;

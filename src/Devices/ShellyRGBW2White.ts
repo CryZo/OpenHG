@@ -11,11 +11,6 @@ export default class ShellyRGBW2White  extends Device implements IBrightness {
 	Status: boolean = false;
 	Brightness: number = 0;
 
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff', 'action.devices.traits.ColorSetting']; //TODO
-	aog_Attributes: null;
-
 	lightenAmount: number = 20;
 
 	mh: MQTTHandler;

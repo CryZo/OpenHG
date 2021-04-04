@@ -11,13 +11,6 @@ export default class ShellyRGBW2ColorAndWhite  extends Device implements IRGB, I
 	Color: Color = Color.GetBlack();
 	Traits: Trait[] = [Trait.OnOff, Trait.RGB, Trait.Brightness]
 
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff', 'action.devices.traits.ColorSetting'];
-	aog_Attributes: any = {
-		colorModel: 'rgb'
-	};
-
 	lightenAmount: number = 20;
 
 	mh: MQTTHandler;

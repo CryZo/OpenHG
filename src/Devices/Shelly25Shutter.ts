@@ -17,12 +17,6 @@ export default class Shelly25Shutter  extends Device implements IOpenClose, ITem
 	Power: number = 0;
 	Energy: number = 0;
 
-	//Defaults
-	//TODO
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff', 'action.devices.traits.ColorSetting']; //TODO
-	aog_Attributes: null;
-
 	mh: MQTTHandler;
 	shellyDevId: string;
 

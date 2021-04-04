@@ -13,11 +13,6 @@ export default class Shelly1l  extends Device implements IOnOff {
 	mh: MQTTHandler;
 	shellyDevId: string;
 
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff'];
-	aog_Attributes: any = {};
-
 	constructor(Name: string, id: string, mh: MQTTHandler) {
 		super();
 		

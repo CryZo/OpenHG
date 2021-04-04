@@ -17,12 +17,6 @@ export default class ShellyDW2  extends Device implements IOpenCloseStatus, ITem
 	Status: boolean = false;
 	Vibration: boolean = false;
 
-	//Defaults
-	//TODO
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff', 'action.devices.traits.ColorSetting']; //TODO
-	aog_Attributes: null;
-
 	mh: MQTTHandler;
 	shellyDevId: string;
 

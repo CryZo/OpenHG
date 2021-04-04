@@ -14,11 +14,6 @@ export default class RestToggle  extends Device implements IOnOff {
 	OnUrl: string;
 	OffUrl: string;
 
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff'];
-	aog_Attributes: any = {};
-
 	constructor(Name: string, id: string) {
 		super();
 		

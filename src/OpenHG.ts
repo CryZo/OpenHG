@@ -38,15 +38,6 @@ for (let i in config.Devices) {
 		}
 	}
 
-	// TODO Refactor or purge me
-	//Apply AoG types/traits (if set)
-	// if (curObj.aog_Type && curObj.aog_Traits) {
-	// 	newDev.aog_Type = curObj.aog_Type;
-	// 	newDev.aog_Traits = curObj.aog_Traits;
-	// 	if (curObj.aog_Attributes)
-	// 		newDev.aog_Attributes = curObj.aog_Attributes;
-	// }
-
 	//Init
 	newDev.Run();
 
@@ -65,10 +56,6 @@ for (let i in config.Devices) {
 var rest: RestApi = new RestApi(rooms);
 
 if (config.Integrations) {
-	if ((<string[]>config.Integrations).includes('Google')){
-		//Init Google
-	//	var google = new Google(rooms);
-	}
 }
 
 

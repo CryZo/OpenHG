@@ -18,11 +18,6 @@ export default class ChaserHeater extends Device implements IOnOff, ITemperature
 	mh: MQTTHandler;
 	devId: string;
 
-	//Defaults
-	aog_Type: string = 'action.devices.types.HEATER';
-	aog_Traits: string[] = ['action.devices.traits.OnOff', 'action.devices.traits.TemperatureSetting'];
-	aog_Attributes: any = {};
-
 	constructor(Name: string, id: string, mh: MQTTHandler) {
 		super();
 

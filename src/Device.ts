@@ -15,8 +15,4 @@ export default class Device extends EventEmitter {
     Room: Room;
     
     Run(): void {}
-
-    aog_Type: string = '';
-    aog_Traits: string[] = [];
-    aog_Attributes: any;
 }

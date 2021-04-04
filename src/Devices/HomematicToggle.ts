@@ -15,11 +15,6 @@ export default class HomematicToggle  extends Device implements IOnOff {
 	ApiURL: string;
 	IseId: number;
 
-	//Defaults
-	aog_Type: string = 'action.devices.types.LIGHT';
-	aog_Traits: string[] = ['action.devices.traits.OnOff'];
-	aog_Attributes: any = {};
-
 	constructor(Name: string, id: string) {
 		super();
 		
