@@ -1,5 +1,5 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IEnergy extends Device {
+export default interface IEnergy extends Device {
 	Energy: number;
 }

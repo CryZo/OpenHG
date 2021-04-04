@@ -1,10 +1,10 @@
-import { Device } from "./Device";
+import { Device } from "./";
 
 interface IEvents {
     change: Function[];
 }
 
-export class Events {
+export default class Events {
     private callbacks: IEvents = {
         change: []
     }

@@ -1,12 +1,8 @@
-import { DeviceCollection } from "./DeviceCollection";
-import { DeviceController } from "./DeviceController";
-import { DeviceType } from "./Enums/DeviceType";
-import { Trait } from "./Enums/Trait";
-import { IHumidity } from "./interfaces/Traits/IHumidity";
-import { ITemperature } from "./interfaces/Traits/ITemperature";
-import { RestApi } from "./RestApi";
+import { DeviceCollection, DeviceController, RestApi } from "./";
+import { DeviceType, Trait } from "./Enums";
+import { IHumidity, ITemperature } from "./interfaces/Traits";
 
-export class Room {
+export default class Room {
 	Name: string;
 	Floor: number;
 	_id: string;

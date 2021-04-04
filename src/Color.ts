@@ -1,6 +1,6 @@
-import { Helpers } from "./Helpers";
+import { Helpers } from "./";
 
-export class Color {
+export default class Color {
 	Red: number;
 	Green: number;
 	Blue: number;

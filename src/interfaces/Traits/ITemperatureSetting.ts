@@ -1,6 +1,6 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface ITemperatureSetting extends Device {
+export default interface ITemperatureSetting extends Device {
 	TargetTemperature: number;
 	AutomationTemperature: number;
 

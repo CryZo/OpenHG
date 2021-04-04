@@ -1,10 +1,8 @@
-import { Device } from "../Device";
-import { IOnOff } from "../interfaces/Traits/IOnOff";
-import { DeviceType } from "../Enums/DeviceType";
-import { MQTTHandler } from "../MQTTHandler";
-import { Trait } from "../Enums/Trait";
+import { Device, MQTTHandler } from "../";
+import { IOnOff } from "../interfaces/Traits";
+import { DeviceType, Trait } from "../Enums";
 
-export class TasmotaSingleRelais  extends Device implements IOnOff {
+export default class TasmotaSingleRelais  extends Device implements IOnOff {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;

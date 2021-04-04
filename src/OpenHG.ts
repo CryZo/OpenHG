@@ -1,16 +1,8 @@
 #!/usr/bin/env node
 
-import { Room } from "./Room";
-import { MQTTHandler } from "./MQTTHandler";
-import { DeviceController } from "./DeviceController";
-import { RoomCollection } from "./RoomCollection";
-import { RestApi } from "./RestApi";
+import { Device, DeviceController, Events, MQTTControls, MQTTHandler, RestApi, Room, RoomCollection } from "./";
 import fs from 'fs';
 import path from "path";
-//import { Google } from "./Integrations/Google";
-import { Events } from "./Events";
-import { MQTTControls } from "./MQTTControls";
-import { Device } from "./Device";
 
 //Load config
 var config: any = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), { encoding: 'utf8' }));

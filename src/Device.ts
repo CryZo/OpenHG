@@ -1,9 +1,8 @@
-import { Trait } from "./Enums/Trait";
-import { DeviceType } from "./Enums/DeviceType";
+import { Room } from "./";
+import { DeviceType, Trait } from "./Enums/";
 import { EventEmitter } from 'events'
-import { Room } from "./Room";
 
-export class Device extends EventEmitter {
+export default class Device extends EventEmitter {
     constructor() {
         super();
     }

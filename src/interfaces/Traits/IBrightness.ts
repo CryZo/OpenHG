@@ -1,6 +1,6 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IBrightness extends Device {
+export default interface IBrightness extends Device {
 	Brightness: number;
 
 	Lighten(): void;

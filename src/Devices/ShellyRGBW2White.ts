@@ -1,10 +1,8 @@
-import { Device } from "../Device";
-import { IBrightness } from "../interfaces/Traits/IBrightness";
-import { DeviceType } from "../Enums/DeviceType";
-import { MQTTHandler } from "../MQTTHandler";
-import { Trait } from "../Enums/Trait";
+import { Device, MQTTHandler } from "../";
+import { IBrightness } from "../interfaces/Traits";
+import { DeviceType, Trait } from "../Enums";
 
-export class ShellyRGBW2White  extends Device implements IBrightness {
+export default class ShellyRGBW2White  extends Device implements IBrightness {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;

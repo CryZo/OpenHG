@@ -1,5 +1,5 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IVibration extends Device {
+export default interface IVibration extends Device {
 	Vibration: boolean;
 }

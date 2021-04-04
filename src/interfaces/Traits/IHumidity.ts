@@ -1,5 +1,5 @@
-import { Device } from "../../Device";
+import { Device } from "../../";
 
-export interface IHumidity extends Device {
+export default interface IHumidity extends Device {
 	Humidity: number;
 }

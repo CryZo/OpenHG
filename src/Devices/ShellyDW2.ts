@@ -1,16 +1,8 @@
-import { Device } from "../Device";
-import { ITemperature } from "../interfaces/Traits/ITemperature";
-import { IOpenCloseStatus } from "../interfaces/Traits/IOpenCloseStatus";
-import { IIllumination } from "../interfaces/Traits/IIllumination";
-import { IVibration } from "../interfaces/Traits/IVibration";
-import { ILux } from "../interfaces/Traits/ILux";
-import { IBattery } from "../interfaces/Traits/IBattery";
+import { Device, MQTTHandler } from "../";
+import { ITemperature, IOpenCloseStatus, IIllumination, IVibration, ILux, IBattery } from "../interfaces/Traits/";
+import { DeviceType, Trait } from "../Enums";
 
-import { DeviceType } from "../Enums/DeviceType";
-import { MQTTHandler } from "../MQTTHandler";
-import { Trait } from "../Enums/Trait";
-
-export class ShellyDW2  extends Device implements IOpenCloseStatus, ITemperature, ILux, IIllumination, IBattery, IVibration {
+export default class ShellyDW2  extends Device implements IOpenCloseStatus, ITemperature, ILux, IIllumination, IBattery, IVibration {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Blinds;

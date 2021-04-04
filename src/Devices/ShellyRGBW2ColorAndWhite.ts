@@ -1,12 +1,8 @@
-import { Device } from "../Device";
-import { IRGB } from "../interfaces/Traits/IRGB";
-import { IBrightness } from "../interfaces/Traits/IBrightness";
-import { DeviceType } from "../Enums/DeviceType";
-import { MQTTHandler } from "../MQTTHandler";
-import { Color } from "../Color";
-import { Trait } from "../Enums/Trait";
+import { Color, Device, MQTTHandler } from "../";
+import { IRGB, IBrightness } from "../interfaces/Traits/";
+import { DeviceType, Trait } from "../Enums/";
 
-export class ShellyRGBW2ColorAndWhite  extends Device implements IRGB, IBrightness {
+export default class ShellyRGBW2ColorAndWhite  extends Device implements IRGB, IBrightness {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
