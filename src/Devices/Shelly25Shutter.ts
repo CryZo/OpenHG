@@ -39,11 +39,11 @@ export default class Shelly25Shutter  extends Device implements IOpenClose, ITem
 		let tmpStatus: BlindStatus = null;
 		switch (payload) {
 			case 'open':
-				tmpStatus = BlindStatus.MovingUp;
+				tmpStatus = BlindStatus.Opening;
 				break;
 
 			case 'close':
-				tmpStatus = BlindStatus.MovingDown;
+				tmpStatus = BlindStatus.Closing;
 				break;
 
 			case 'stop':
@@ -105,13 +105,13 @@ export default class Shelly25Shutter  extends Device implements IOpenClose, ITem
 		}
 	}
 
-	TurnUp(): void {
-		this.MovementStatus = BlindStatus.MovingUp;
+	Open(): void {
+		this.MovementStatus = BlindStatus.Opening;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command`, 'open');
 		global.eventHandler.fire('change', this);
 	}
-	TurnDown(): void {
-		this.MovementStatus = BlindStatus.MovingDown;
+	Close(): void {
+		this.MovementStatus = BlindStatus.Closing;
 		this.mh.SendCommand(`shellies/shellyswitch25-${this.shellyDevId}/roller/0/command`, 'close');
 		global.eventHandler.fire('change', this);
 	}

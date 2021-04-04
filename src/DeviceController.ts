@@ -80,10 +80,10 @@ export default class DeviceController {
 			let castedDev = dev as IOpenClose;
 
 			//TODO Rename me
-			if (cmd == 'up') castedDev.TurnUp();
-			else if (cmd == 'down') castedDev.TurnDown();
-			if (cmd == 'open') castedDev.TurnUp();
-			else if (cmd == 'close') castedDev.TurnDown();
+			if (cmd == 'up') castedDev.Open();
+			else if (cmd == 'down') castedDev.Close();
+			if (cmd == 'open') castedDev.Open();
+			else if (cmd == 'close') castedDev.Close();
 			else if (cmd == 'stop') castedDev.Stop();
 		}
 

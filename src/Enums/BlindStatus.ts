@@ -1,5 +1,5 @@
 export enum BlindStatus {
-	MovingUp,
-	MovingDown,
+	Opening,
+	Closing,
 	Stop
 }
