@@ -2,6 +2,7 @@ import { Color, Device, MQTTHandler } from "./";
 import { ChaserHeater, FireTree, HomematicToggle, RestToggle, Shelly1, Shelly1l, Shelly25Shutter, ShellyDW2, ShellyRGBW2Color, ShellyRGBW2ColorAndWhite, ShellyRGBW2White, TasmotaRGB, TasmotaSingleRelais } from "./Devices";
 import { IOnOff, IRGB, IBrightness, IOpenClose, IPosition, ITemperatureSetting } from "./interfaces/Traits/";
 import { Trait } from "./Enums";
+import DenonAvr from "./Devices/DenonAvr";
 
 export default class DeviceController {
 	mqtt: MQTTHandler;
@@ -38,6 +39,8 @@ export default class DeviceController {
 				return new ChaserHeater(devName, id, this.mqtt);
 			case 'FireTree':
 				return new FireTree(devName, id, this.mqtt);
+			case 'DenonAvr':
+				return new DenonAvr(devName, id);
 
 			default:
 				throw 'Device class not found!';
