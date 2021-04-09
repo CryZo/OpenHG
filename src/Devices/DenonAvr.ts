@@ -3,7 +3,7 @@ import { DeviceType, Trait } from "../Enums";
 import { IOnOff } from "../interfaces/Traits";
 import TelnetClient from 'telnet-client';
 
-enum Commands {
+export enum Commands {
 	/** Power on */
 	PWON = 'PWON',
 

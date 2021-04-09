@@ -1,4 +1,5 @@
 export {default as ChaserHeater} from './ChaserHeater';
+export {default as DenonAvr} from './DenonAvr';
 export {default as FireTree} from './FireTree';
 export {default as HomematicToggle} from './HomematicToggle';
 export {default as RestToggle} from './RestToggle';
