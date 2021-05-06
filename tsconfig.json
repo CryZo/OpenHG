@@ -2,6 +2,7 @@
 	"compileOnSave": true,
 	"compilerOptions": {
 		"module": "commonjs",
+		"declaration": true,
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"target": "es6",
