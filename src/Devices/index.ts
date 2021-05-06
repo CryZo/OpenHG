@@ -3,6 +3,7 @@ export {default as DenonAvr} from './DenonAvr';
 export {default as FireTree} from './FireTree';
 export {default as HomematicToggle} from './HomematicToggle';
 export {default as RestToggle} from './RestToggle';
+export {default as SamsungSmartTv} from './SamsungSmartTv';
 export {default as Shelly1} from './Shelly1';
 export {default as Shelly1l} from './Shelly1l';
 export {default as Shelly25Shutter} from './Shelly25Shutter';
