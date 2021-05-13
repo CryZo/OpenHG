@@ -1,6 +1,7 @@
 import express from "express";
 import { Device, DeviceController, Room, RoomCollection } from "./";
 import { DeviceType, Trait } from "./Enums";
+import { IDeviceStructure } from "./interfaces/Rest";
 import { IOnOff, IRGB, IOpenClose, IPosition, IBrightness, ITemperatureSetting, ITemperature, IHumidity, IPower, IEnergy } from "./interfaces/Traits";
 
 //TODO Refactor me!
@@ -75,17 +76,17 @@ export default class RestApi {
 		res.status(200).end();
 	}
 
-	static generateDeviceStructure(data: Device[]): any {//TODO Refactor me and then move me to DeviceCollection.ts
-		let ret: any[] = [];
+	static generateDeviceStructure(data: Device[]): IDeviceStructure[] {//TODO Refactor me and then move me to DeviceCollection.ts
+		let ret: IDeviceStructure[] = [];
 
 		for (let d in data) {
 			let curDev = data[d];
-			let dev: any = {};
-
-			dev.id = curDev._id;
-			dev.Name = curDev.Name;
-			dev.Type = curDev.Type;
-			dev.Traits = curDev.Traits;
+			let dev: IDeviceStructure = {
+				id: curDev._id,
+				Name: curDev.Name,
+				Type: curDev.Type,
+				Traits: curDev.Traits
+			};
 
 			if (curDev.Traits.includes(Trait.OnOff))
 			{
