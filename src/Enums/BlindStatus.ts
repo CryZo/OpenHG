@@ -1,5 +1,5 @@
 export enum BlindStatus {
-	Opening,
-	Closing,
-	Stop
+	Opening = 'Opening',
+	Closing = 'Closing',
+	Stop = 'Stop'
 }

@@ -1,5 +1,3 @@
-import { Helpers } from "./";
-
 export default class Color {
 	Red: number;
 	Green: number;
@@ -45,11 +43,19 @@ export default class Color {
 		this.Blue = parseInt(Color.substr(4, 2), 16)
 	}
 	GetHexColor(): string {
+		const fillHexString = (input: string): string => {
+			if (input.length == 1) {
+				return `0${input}`;
+			}
+			
+			return input;
+		}
+
 		let out: string = '';
 
-		out += Helpers.fillHexString(this.Red.toString(16));
-		out += Helpers.fillHexString(this.Green.toString(16));
-		out += Helpers.fillHexString(this.Blue.toString(16));
+		out += fillHexString(this.Red.toString(16));
+		out += fillHexString(this.Green.toString(16));
+		out += fillHexString(this.Blue.toString(16));
 
 		return out;
 	}

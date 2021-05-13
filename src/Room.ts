@@ -1,5 +1,6 @@
 import { DeviceCollection, DeviceController, RestApi } from "./";
 import { DeviceType, Trait } from "./Enums";
+import { IRoomStructure } from "./interfaces/Rest";
 import { IHumidity, ITemperature } from "./interfaces/Traits";
 
 export default class Room {
@@ -75,7 +76,7 @@ export default class Room {
 	}
 
 	stringify(): string {
-		let output: any = {
+		let output: IRoomStructure = {
 			id: this._id,
 			Name: this.Name,
 			Floor: this.Floor,

@@ -1,7 +1,7 @@
 export enum DeviceType {
-	Lights,
-	Blinds,
-	Heater,
-	Multimedia,
-	Sensors
+	Lights = 'Lights',
+	Blinds = 'Blinds',
+	Heater = 'Heater',
+	Multimedia = 'Multimedia',
+	Sensors = 'Sensors'
 }

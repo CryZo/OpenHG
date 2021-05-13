@@ -28,21 +28,21 @@ for (let i in config.Rooms) {
 
 //Create devices and add them to the room
 for (let i in config.Devices) {
-	let curObj: any = config.Devices[i];
-	let newDev: Device = dc.GetClass(curObj.Class, curObj.Name, i);
-
-	//Apply extra parameters
-	if (curObj.extraParams) {
-		for (let param in curObj.extraParams) {
-			(<any>newDev)[param] = curObj.extraParams[param];
-		}
-	}
-
-	//Init
-	newDev.Run();
-
-	//Add to room
 	try {
+		let curObj: any = config.Devices[i];
+		let newDev: Device = dc.GetClass(curObj.Class, curObj.Name, i);
+
+		//Apply extra parameters
+		if (curObj.extraParams) {
+			for (let param in curObj.extraParams) {
+				(<any>newDev)[param] = curObj.extraParams[param];
+			}
+		}
+
+		//Init
+		newDev.Run();
+
+		//Add to room
 		const room = rooms.GetById(curObj.Room);
 		room.Devices.Add(newDev);
 		newDev.Room = room;
