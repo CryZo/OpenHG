@@ -34,7 +34,7 @@ export default class DeviceController {
 			case 'RestToggle':
 				return new RestToggle(devName, id);
 			case 'HomematicToggle':
-				return new HomematicToggle(devName, id);
+				return new HomematicToggle(devName, id, this.mqtt);
 			case 'ChaserHeater':
 				return new ChaserHeater(devName, id, this.mqtt);
 			case 'FireTree':
