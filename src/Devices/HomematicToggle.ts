@@ -1,76 +1,50 @@
-import { Device } from "../";
+import { Device, MQTTHandler } from "..";
 import { DeviceType, Trait } from "../Enums";
 import { IOnOff } from "../interfaces/Traits";
-import * as https from "https";
-import * as http from "http";
 
-export default class HomematicToggle  extends Device implements IOnOff {
+export default class HomematicToggle extends Device implements IOnOff {
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Lights;
+	Status: boolean = false;
 	Traits: Trait[] = [Trait.OnOff];
 
-	Status: boolean = false;
+	mh: MQTTHandler;
+	channelName: string;
 
-	ApiURL: string;
-	IseId: number;
-
-	constructor(Name: string, id: string) {
+	constructor(Name: string, id: string, mh: MQTTHandler) {
 		super();
 		
 		this.Name = Name;
 		this._id = id;
+		this.mh = mh;
+
 	}
 	Run(): void {
-		setInterval(()=>{
-			let url = `${this.ApiURL}/state.cgi?datapoint_id=${this.IseId}`;
-			let callback = (res: http.IncomingMessage) => {
-				let data = '';
+		this.mh.Subscribe(`hm/status/${this.channelName}/STATE`, this.onMQTT.bind(this))
+	}
 
-				res.on('data', (chunk) => {
-					data += chunk;
-				});
-			  
-				res.on('end', () => {
-					let tmpStatus = data.includes(`value='true'`);
-					
-					if (tmpStatus !== this.Status) {
-						this.Status = tmpStatus;
-						global.eventHandler.fire('change', this);
-					}
-				});
-			}
+	onMQTT(payload: string) {
+		let tmpStatus = false;
+		if (payload.toString() == '1') tmpStatus = true;
 
-			if (/^https/g.test(url))
-				https.get(url, callback);
-			else if (/^http/g.test(url))
-				http.get(url, callback);
-		}, 5000)
+		if (tmpStatus !== this.Status) {
+			this.Status = tmpStatus;
+			global.eventHandler.fire('change', this);
+		}
 	}
  
 	TurnOn(): void {
 		this.Status = true;
-		this.SendCommand(`${this.ApiURL}/statechange.cgi?ise_id=${this.IseId}&new_value=true`);
+		this.mh.SendCommand(`hm/set/${this.channelName}/STATE`, '1');
 		global.eventHandler.fire('change', this);
 	}
 	TurnOff(): void {
 		this.Status = false;
-		this.SendCommand(`${this.ApiURL}/statechange.cgi?ise_id=${this.IseId}&new_value=false`);
+		this.mh.SendCommand(`hm/set/${this.channelName}/STATE`, '0');
 		global.eventHandler.fire('change', this);
 	}
 	Toggle(): void {
 		this.Status ? this.TurnOff() : this.TurnOn();
-	}
-
-	SendCommand(url: string): void {
-		try {
-			if (/^https/g.test(url))
-				https.get(url);
-			else if (/^http/g.test(url))
-				http.get(url);
-		}
-		catch {
-
-		}
 	}
 }
