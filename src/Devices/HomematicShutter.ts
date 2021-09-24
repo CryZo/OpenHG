@@ -64,17 +64,17 @@ export default class HomematicShutter  extends Device implements IOpenClose, IPo
 
 	Open(): void {
 		this.MovementStatus = BlindStatus.Opening;
-		this.mh.SendCommand(`hm/set/${this.channelName}/ACTIVITY_STATE`, '1');
+		this.mh.SendCommand(`hm/set/${this.channelName}/LEVEL`, '1');
 		global.eventHandler.fire('change', this);
 	}
 	Close(): void {
 		this.MovementStatus = BlindStatus.Closing;
-		this.mh.SendCommand(`hm/set/${this.channelName}/ACTIVITY_STATE`, '2');
+		this.mh.SendCommand(`hm/set/${this.channelName}/LEVEL`, '0');
 		global.eventHandler.fire('change', this);
 	}
 	Stop(): void {
 		this.MovementStatus = BlindStatus.Stop;
-		this.mh.SendCommand(`hm/set/${this.channelName}/ACTIVITY_STATE`, '3');
+		this.mh.SendCommand(`hm/set/${this.channelName}/STOP`, '1');
 		global.eventHandler.fire('change', this);
 	}
 
