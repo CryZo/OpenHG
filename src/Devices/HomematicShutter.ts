@@ -6,7 +6,7 @@ export default class HomematicShutter  extends Device implements IOpenClose, IPo
 	Name: string;
 	_id: string;
 	Type: DeviceType = DeviceType.Blinds;
-	Traits: Trait[] = [Trait.OpenClose];
+	Traits: Trait[] = [Trait.OpenClose, Trait.Position];
 
 	MovementStatus: BlindStatus = BlindStatus.Stop;
 	Position: number = 0;
