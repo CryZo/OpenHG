@@ -3,6 +3,7 @@ export {default as DenonAvr} from './DenonAvr';
 export {default as FireTree} from './FireTree';
 export {default as HomematicToggle} from './HomematicToggle';
 export {default as HomematicThermometer} from './HomematicThermometer';
+export {default as HomematicShutter} from './HomematicShutter';
 export {default as RestToggle} from './RestToggle';
 export {default as Shelly1} from './Shelly1';
 export {default as Shelly1l} from './Shelly1l';

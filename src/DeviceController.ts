@@ -1,5 +1,5 @@
 import { Color, Device, MQTTHandler } from "./";
-import { ChaserHeater, FireTree, HomematicThermometer, HomematicToggle, RestToggle, Shelly1, Shelly1l, Shelly25Shutter, ShellyDW2, ShellyRGBW2Color, ShellyRGBW2ColorAndWhite, ShellyRGBW2White, TasmotaRGB, TasmotaSingleRelais } from "./Devices";
+import { ChaserHeater, FireTree, HomematicShutter, HomematicThermometer, HomematicToggle, RestToggle, Shelly1, Shelly1l, Shelly25Shutter, ShellyDW2, ShellyRGBW2Color, ShellyRGBW2ColorAndWhite, ShellyRGBW2White, TasmotaRGB, TasmotaSingleRelais } from "./Devices";
 import { IOnOff, IRGB, IBrightness, IOpenClose, IPosition, ITemperatureSetting } from "./interfaces/Traits/";
 import { Trait } from "./Enums";
 import DenonAvr from "./Devices/DenonAvr";
@@ -37,6 +37,8 @@ export default class DeviceController {
 				return new HomematicToggle(devName, id, this.mqtt);
 			case 'HomematicThermometer':
 				return new HomematicThermometer(devName, id, this.mqtt);
+			case 'HomematicShutter':
+				return new HomematicShutter(devName, id, this.mqtt);
 			case 'ChaserHeater':
 				return new ChaserHeater(devName, id, this.mqtt);
 			case 'FireTree':
