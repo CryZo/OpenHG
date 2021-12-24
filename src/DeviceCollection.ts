@@ -1,5 +1,5 @@
 import { Device } from "./";
-import { Trait } from "./Enums";
+import { Trait, DeviceType } from "./Enums";
 import ICollection from "./interfaces/ICollection";
 
 export default class DeviceCollection implements ICollection {
@@ -25,6 +25,18 @@ export default class DeviceCollection implements ICollection {
 
 		for (let i in this.Items) {
 			if (this.Items[i].Traits.includes(trait)) {
+				ret.Add(this.Items[i]);
+			}
+		}
+
+		return ret;
+	}
+
+	GetByType(type: DeviceType): DeviceCollection {
+		let ret = new DeviceCollection();
+
+		for (let i in this.Items) {
+			if (this.Items[i].Type.includes(type)) {
 				ret.Add(this.Items[i]);
 			}
 		}
